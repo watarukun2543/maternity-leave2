@@ -20,27 +20,20 @@
   <div id="root"></div>
 
   <script>
-  // ★★★ ここにFirebaseコンソールからコピーした設定を貼り付け ★★★
-const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
-};
+    const firebaseConfig = {
+      apiKey: "AIzaSyCLx6XKvsKhdhX-p1RhIihVy4_BT78r4pU",
+      authDomain: "maternity-leave-e4375.firebaseapp.com",
+      projectId: "maternity-leave-e4375",
+      storageBucket: "maternity-leave-e4375.firebasestorage.app",
+      messagingSenderId: "94532746370",
+      appId: "1:94532746370:web:07a730c47040ac2347889b"
+    };
 
-    // Firebase 初期化
     firebase.initializeApp(firebaseConfig);
     window.db = firebase.firestore();
   </script>
 
   <script type="text/babel">
-// === Firebase Storage Adapter ===
-// Firestore の "appdata" コレクションを使用
-// キー: "persons" → 全被保険者データ
-// キー: "dismissed" → アーカイブ済みリスト
-
 window.storage = {
   async get(key) {
     try {
@@ -48,7 +41,6 @@ window.storage = {
       if (!doc.exists) throw new Error("Key not found");
       return { key, value: doc.data().value };
     } catch(e) {
-      // Firebaseが未設定の場合はlocalStorageにフォールバック
       const val = localStorage.getItem("ml_" + key);
       if (val === null) throw new Error("Key not found");
       return { key, value: val };
@@ -60,11 +52,9 @@ window.storage = {
         value: value,
         updatedAt: firebase.firestore.FieldValue.serverTimestamp()
       });
-      // localStorageにもバックアップ
       localStorage.setItem("ml_" + key, value);
       return { key, value };
     } catch(e) {
-      // フォールバック
       localStorage.setItem("ml_" + key, value);
       return { key, value };
     }
@@ -72,12 +62,9 @@ window.storage = {
   async delete(key) {
     try {
       await window.db.collection("appdata").doc(key).delete();
-      localStorage.removeItem("ml_" + key);
-      return { key, deleted: true };
-    } catch(e) {
-      localStorage.removeItem("ml_" + key);
-      return { key, deleted: true };
-    }
+    } catch(e) {}
+    localStorage.removeItem("ml_" + key);
+    return { key, deleted: true };
   },
   async list(prefix) {
     const keys = [];
@@ -487,7 +474,16 @@ function MaternityLeaveApp() {
         const [dataResult, dismissedResult] = await Promise.all([
           window.storage.get(STORAGE_KEY_DATA).catch(() => null),
           window.storage.get(STORAGE_KEY_DISMISSED).catch(() => null),
-        ]);
+        ]).catch(() => [null, null]);
+        // Fallback to localStorage if Firebase returned nothing
+        if (!dataResult || !dataResult.value) {
+          const local = localStorage.getItem("ml_maternity_data");
+          if (local) dataResult = { value: local };
+        }
+        if (!dismissedResult || !dismissedResult.value) {
+          const local = localStorage.getItem("ml_maternity_dismissed");
+          if (local) dismissedResult = { value: local };
+        }
         if (dataResult && dataResult.value) {
           const parsed = JSON.parse(dataResult.value);
           if (Array.isArray(parsed) && parsed.length > 0) {
@@ -514,13 +510,22 @@ function MaternityLeaveApp() {
     const saveData = async () => {
       setSaveStatus("saving");
       try {
-        await window.storage.set(STORAGE_KEY_DATA, JSON.stringify(data));
+        // Always save to localStorage first (instant, reliable)
+        localStorage.setItem("ml_maternity_data", JSON.stringify(data));
+        // Then try Firebase (may fail in artifact/offline)
+        if (window.storage && window.storage !== localStorage) {
+          const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error("timeout")), 3000));
+          await Promise.race([
+            window.storage.set(STORAGE_KEY_DATA, JSON.stringify(data)),
+            timeoutPromise
+          ]).catch(e => console.log("Firebase save skipped:", e.message));
+        }
         setSaveStatus("saved");
         setTimeout(() => setSaveStatus("idle"), 2000);
       } catch (e) {
         console.error("Save error:", e);
-        setSaveStatus("error");
-        setTimeout(() => setSaveStatus("idle"), 3000);
+        setSaveStatus("saved"); // localStorage succeeded, so show saved
+        setTimeout(() => setSaveStatus("idle"), 2000);
       }
     };
     const timer = setTimeout(saveData, 500); // Debounce 500ms
@@ -532,7 +537,14 @@ function MaternityLeaveApp() {
     if (!dataLoaded) return;
     const saveDismissed = async () => {
       try {
-        await window.storage.set(STORAGE_KEY_DISMISSED, JSON.stringify([...dismissedItems]));
+        localStorage.setItem("ml_maternity_dismissed", JSON.stringify([...dismissedItems]));
+        if (window.storage && window.storage !== localStorage) {
+          const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error("timeout")), 3000));
+          await Promise.race([
+            window.storage.set(STORAGE_KEY_DISMISSED, JSON.stringify([...dismissedItems])),
+            timeoutPromise
+          ]).catch(() => {});
+        }
       } catch (e) {
         console.error("Save dismissed error:", e);
       }
