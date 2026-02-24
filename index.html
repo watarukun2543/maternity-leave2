@@ -10,66 +10,16 @@
   <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-  <style>
-    body { margin: 0; padding: 0; font-family: "Noto Sans JP", -apple-system, BlinkMacSystemFont, sans-serif; }
-    #root { min-height: 100vh; }
-  </style>
+  <style>body{margin:0;padding:0;font-family:"Noto Sans JP",-apple-system,BlinkMacSystemFont,sans-serif}#root{min-height:100vh}</style>
 </head>
 <body>
   <div id="root"></div>
   <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyCLx6XKvsKhdhX-p1RhIihVy4_BT78r4pU",
-      authDomain: "maternity-leave-e4375.firebaseapp.com",
-      projectId: "maternity-leave-e4375",
-      storageBucket: "maternity-leave-e4375.firebasestorage.app",
-      messagingSenderId: "94532746370",
-      appId: "1:94532746370:web:07a730c47040ac2347889b"
-    };
-    firebase.initializeApp(firebaseConfig);
-    window.db = firebase.firestore();
+    const firebaseConfig={apiKey:"AIzaSyCLx6XKvsKhdhX-p1RhIihVy4_BT78r4pU",authDomain:"maternity-leave-e4375.firebaseapp.com",projectId:"maternity-leave-e4375",storageBucket:"maternity-leave-e4375.firebasestorage.app",messagingSenderId:"94532746370",appId:"1:94532746370:web:07a730c47040ac2347889b"};
+    firebase.initializeApp(firebaseConfig);window.db=firebase.firestore();
   </script>
   <script type="text/babel">
-window.storage = {
-  async get(key) {
-    try {
-      const doc = await window.db.collection("appdata").doc(key).get();
-      if (!doc.exists) throw new Error("Key not found");
-      return { key, value: doc.data().value };
-    } catch(e) {
-      const val = localStorage.getItem("ml_" + key);
-      if (val === null) throw new Error("Key not found");
-      return { key, value: val };
-    }
-  },
-  async set(key, value) {
-    try {
-      await window.db.collection("appdata").doc(key).set({
-        value: value,
-        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-      });
-      localStorage.setItem("ml_" + key, value);
-      return { key, value };
-    } catch(e) {
-      localStorage.setItem("ml_" + key, value);
-      return { key, value };
-    }
-  },
-  async delete(key) {
-    try { await window.db.collection("appdata").doc(key).delete(); } catch(e) {}
-    localStorage.removeItem("ml_" + key);
-    return { key, deleted: true };
-  },
-  async list(prefix) {
-    const keys = [];
-    try {
-      const snap = await window.db.collection("appdata").get();
-      snap.forEach(doc => { if (!prefix || doc.id.startsWith(prefix)) keys.push(doc.id); });
-    } catch(e) {}
-    return { keys };
-  }
-};
-
+window.storage={async get(key){try{const doc=await window.db.collection("appdata").doc(key).get();if(!doc.exists)throw new Error("Key not found");return{key,value:doc.data().value}}catch(e){const val=localStorage.getItem("ml_"+key);if(val===null)throw new Error("Key not found");return{key,value:val}}},async set(key,value){try{await window.db.collection("appdata").doc(key).set({value,updatedAt:firebase.firestore.FieldValue.serverTimestamp()});localStorage.setItem("ml_"+key,value);return{key,value}}catch(e){localStorage.setItem("ml_"+key,value);return{key,value}}},async delete(key){try{await window.db.collection("appdata").doc(key).delete()}catch(e){}localStorage.removeItem("ml_"+key);return{key,deleted:true}},async list(prefix){const keys=[];try{const snap=await window.db.collection("appdata").get();snap.forEach(doc=>{if(!prefix||doc.id.startsWith(prefix))keys.push(doc.id)})}catch(e){}return{keys}}};
 const { useState, useEffect, useMemo, useCallback, useRef } = React;
 
 // ============================================================
@@ -1484,6 +1434,8 @@ function MaternityLeaveApp() {
                   flex: "1 1 auto", background: COLORS.surface, borderRadius: 14,
                   border: `1px solid ${COLORS.border}`, overflow: "hidden",
                   animation: "slideIn 0.3s ease",
+                  position: "sticky", top: 80, alignSelf: "flex-start",
+                  maxHeight: "calc(100vh - 100px)", overflowY: "auto",
                 }}>
                   {/* Detail Header */}
                   <div style={{
@@ -1766,39 +1718,51 @@ function MaternityLeaveApp() {
 
                       {/* Benefit Period Summary */}
                       <div style={{ marginTop: 14 }}>
-                        <div style={{ fontSize: 11, color: COLORS.textMuted, marginBottom: 6, fontWeight: 500 }}>給付金期間一覧</div>
+                        <div style={{ fontSize: 11, color: COLORS.textMuted, marginBottom: 6, fontWeight: 500 }}>給付金期間一覧 <span style={{ fontSize: 10, color: COLORS.textDim }}>（未申請をクリックで記録追加）</span></div>
                         <div style={{ display: "grid", gridTemplateColumns: "auto 1fr 1fr", gap: "2px 10px", fontSize: 11 }}>
                           {personCalc.benefitPeriods.map((per, i) => {
                             const appKey = APPLICATION_TYPES[3 + i];
                             const done = !!(selectedPerson.applications||{})[appKey];
                             return [
-                              <span key={`l${i}`} style={{ color: done ? COLORS.accentGreen : COLORS.textMuted, fontWeight: 500, padding: "3px 0" }}>
+                              <span key={`l${i}`} onClick={() => { if (!done) { setAppFormData({ type: appKey, date: "", staff: "" }); setShowAppForm(true); } }}
+                                style={{ color: done ? COLORS.accentGreen : COLORS.primary, fontWeight: 500, padding: "4px 0", cursor: done ? "default" : "pointer", borderRadius: 4, transition: "background 0.15s" }}
+                                onMouseEnter={e => { if (!done) e.currentTarget.style.background = `${COLORS.primary}10`; }}
+                                onMouseLeave={e => { e.currentTarget.style.background = "transparent"; }}
+                              >
                                 {done ? "✓" : "○"} {per.label}
                               </span>,
-                              <span key={`s${i}`} style={{ color: COLORS.textMuted, padding: "3px 0" }}>{formatDate(per.start)}</span>,
-                              <span key={`e${i}`} style={{ padding: "3px 0" }}>～ {formatDate(per.end)}</span>,
+                              <span key={`s${i}`} style={{ color: COLORS.textMuted, padding: "4px 0" }}>{formatDate(per.start)}</span>,
+                              <span key={`e${i}`} style={{ padding: "4px 0" }}>～ {formatDate(per.end)}</span>,
                             ];
                           })}
                           {personCalc.extensionPeriods.map((per, i) => {
                             const appKey = APPLICATION_TYPES[9 + i];
                             const done = !!(selectedPerson.applications||{})[appKey];
                             return [
-                              <span key={`el${i}`} style={{ color: done ? COLORS.accentGreen : COLORS.accentOrange, fontWeight: 500, padding: "3px 0" }}>
+                              <span key={`el${i}`} onClick={() => { if (!done) { setAppFormData({ type: appKey, date: "", staff: "" }); setShowAppForm(true); } }}
+                                style={{ color: done ? COLORS.accentGreen : COLORS.accentOrange, fontWeight: 500, padding: "4px 0", cursor: done ? "default" : "pointer", borderRadius: 4, transition: "background 0.15s" }}
+                                onMouseEnter={e => { if (!done) e.currentTarget.style.background = `${COLORS.accentOrange}10`; }}
+                                onMouseLeave={e => { e.currentTarget.style.background = "transparent"; }}
+                              >
                                 {done ? "✓" : "○"} {per.label}
                               </span>,
-                              <span key={`es${i}`} style={{ color: COLORS.textMuted, padding: "3px 0" }}>{formatDate(per.start)}</span>,
-                              <span key={`ee${i}`} style={{ padding: "3px 0" }}>～ {formatDate(per.end)}</span>,
+                              <span key={`es${i}`} style={{ color: COLORS.textMuted, padding: "4px 0" }}>{formatDate(per.start)}</span>,
+                              <span key={`ee${i}`} style={{ padding: "4px 0" }}>～ {formatDate(per.end)}</span>,
                             ];
                           })}
                           {personCalc.reExtensionPeriods.map((per, i) => {
                             const appKey = APPLICATION_TYPES[12 + i];
                             const done = !!(selectedPerson.applications||{})[appKey];
                             return [
-                              <span key={`rl${i}`} style={{ color: done ? COLORS.accentGreen : COLORS.danger, fontWeight: 500, padding: "3px 0" }}>
+                              <span key={`rl${i}`} onClick={() => { if (!done) { setAppFormData({ type: appKey, date: "", staff: "" }); setShowAppForm(true); } }}
+                                style={{ color: done ? COLORS.accentGreen : COLORS.danger, fontWeight: 500, padding: "4px 0", cursor: done ? "default" : "pointer", borderRadius: 4, transition: "background 0.15s" }}
+                                onMouseEnter={e => { if (!done) e.currentTarget.style.background = `${COLORS.danger}10`; }}
+                                onMouseLeave={e => { e.currentTarget.style.background = "transparent"; }}
+                              >
                                 {done ? "✓" : "○"} {per.label}
                               </span>,
-                              <span key={`rs${i}`} style={{ color: COLORS.textMuted, padding: "3px 0" }}>{formatDate(per.start)}</span>,
-                              <span key={`re${i}`} style={{ padding: "3px 0" }}>～ {formatDate(per.end)}</span>,
+                              <span key={`rs${i}`} style={{ color: COLORS.textMuted, padding: "4px 0" }}>{formatDate(per.start)}</span>,
+                              <span key={`re${i}`} style={{ padding: "4px 0" }}>～ {formatDate(per.end)}</span>,
                             ];
                           })}
                         </div>
@@ -1830,14 +1794,27 @@ function MaternityLeaveApp() {
                           const status = (selectedPerson.applications||{})[type];
                           const isSocial = selectedPerson.insurance === "社／雇";
                           if (!isSocial && i <= 2) return null;
+                          // Find matching period for benefit types (index 3-8)
+                          const periodInfo = (i >= 3 && i <= 8 && personCalc && personCalc.benefitPeriods[i - 3])
+                            ? `${formatDate(personCalc.benefitPeriods[i - 3].start)}～${formatDate(personCalc.benefitPeriods[i - 3].end)}`
+                            : null;
                           return (
-                            <div key={i} style={{
+                            <div key={i} onClick={() => { if (!status) { setAppFormData({ type, date: "", staff: "" }); setShowAppForm(true); } }}
+                              style={{
                               display: "flex", justifyContent: "space-between", alignItems: "center",
                               padding: "7px 12px", borderRadius: 8,
                               background: status ? `${COLORS.accentGreen}05` : `${COLORS.accentYellow}05`,
                               border: `1px solid ${status ? COLORS.accentGreen + "15" : COLORS.border}20`,
-                            }}>
-                              <span style={{ fontSize: 12, color: status ? COLORS.text : COLORS.textMuted }}>{type}</span>
+                              cursor: status ? "default" : "pointer",
+                              transition: "background 0.15s",
+                            }}
+                              onMouseEnter={e => { if (!status) e.currentTarget.style.background = `${COLORS.primary}08`; }}
+                              onMouseLeave={e => { if (!status) e.currentTarget.style.background = `${COLORS.accentYellow}05`; }}
+                            >
+                              <div>
+                                <span style={{ fontSize: 12, color: status ? COLORS.text : COLORS.textMuted }}>{type}</span>
+                                {periodInfo && <div style={{ fontSize: 9, color: COLORS.textDim, marginTop: 1 }}>{periodInfo}</div>}
+                              </div>
                               <StatusBadge status={status} />
                             </div>
                           );
@@ -1851,14 +1828,26 @@ function MaternityLeaveApp() {
                             </div>
                             {APPLICATION_TYPES.slice(9, 12).map((type, i) => {
                               const status = (selectedPerson.applications||{})[type];
+                              const periodInfo = (personCalc && personCalc.extensionPeriods[i])
+                                ? `${formatDate(personCalc.extensionPeriods[i].start)}～${formatDate(personCalc.extensionPeriods[i].end)}`
+                                : null;
                               return (
-                                <div key={`ext-${i}`} style={{
+                                <div key={`ext-${i}`} onClick={() => { if (!status) { setAppFormData({ type, date: "", staff: "" }); setShowAppForm(true); } }}
+                                  style={{
                                   display: "flex", justifyContent: "space-between", alignItems: "center",
                                   padding: "7px 12px", borderRadius: 8,
                                   background: status ? `${COLORS.accentGreen}05` : `${COLORS.accentOrange}05`,
                                   border: `1px solid ${status ? COLORS.accentGreen + "15" : COLORS.accentOrange}15`,
-                                }}>
-                                  <span style={{ fontSize: 12, color: status ? COLORS.text : COLORS.textMuted }}>{type}</span>
+                                  cursor: status ? "default" : "pointer",
+                                  transition: "background 0.15s",
+                                }}
+                                  onMouseEnter={e => { if (!status) e.currentTarget.style.background = `${COLORS.accentOrange}10`; }}
+                                  onMouseLeave={e => { if (!status) e.currentTarget.style.background = `${COLORS.accentOrange}05`; }}
+                                >
+                                  <div>
+                                    <span style={{ fontSize: 12, color: status ? COLORS.text : COLORS.textMuted }}>{type}</span>
+                                    {periodInfo && <div style={{ fontSize: 9, color: COLORS.textDim, marginTop: 1 }}>{periodInfo}</div>}
+                                  </div>
                                   <StatusBadge status={status} />
                                 </div>
                               );
@@ -1874,14 +1863,26 @@ function MaternityLeaveApp() {
                             </div>
                             {APPLICATION_TYPES.slice(12, 15).map((type, i) => {
                               const status = (selectedPerson.applications||{})[type];
+                              const periodInfo = (personCalc && personCalc.reExtensionPeriods[i])
+                                ? `${formatDate(personCalc.reExtensionPeriods[i].start)}～${formatDate(personCalc.reExtensionPeriods[i].end)}`
+                                : null;
                               return (
-                                <div key={`reext-${i}`} style={{
+                                <div key={`reext-${i}`} onClick={() => { if (!status) { setAppFormData({ type, date: "", staff: "" }); setShowAppForm(true); } }}
+                                  style={{
                                   display: "flex", justifyContent: "space-between", alignItems: "center",
                                   padding: "7px 12px", borderRadius: 8,
                                   background: status ? `${COLORS.accentGreen}05` : `${COLORS.danger}05`,
                                   border: `1px solid ${status ? COLORS.accentGreen + "15" : COLORS.danger}15`,
-                                }}>
-                                  <span style={{ fontSize: 12, color: status ? COLORS.text : COLORS.textMuted }}>{type}</span>
+                                  cursor: status ? "default" : "pointer",
+                                  transition: "background 0.15s",
+                                }}
+                                  onMouseEnter={e => { if (!status) e.currentTarget.style.background = `${COLORS.danger}10`; }}
+                                  onMouseLeave={e => { if (!status) e.currentTarget.style.background = `${COLORS.danger}05`; }}
+                                >
+                                  <div>
+                                    <span style={{ fontSize: 12, color: status ? COLORS.text : COLORS.textMuted }}>{type}</span>
+                                    {periodInfo && <div style={{ fontSize: 9, color: COLORS.textDim, marginTop: 1 }}>{periodInfo}</div>}
+                                  </div>
                                   <StatusBadge status={status} />
                                 </div>
                               );
@@ -2633,7 +2634,6 @@ function MaternityLeaveApp() {
     </div>
   );
 }
-
 
 ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(MaternityLeaveApp));
   </script>
