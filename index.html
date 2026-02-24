@@ -8,7 +8,6 @@
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
   <style>
@@ -18,7 +17,6 @@
 </head>
 <body>
   <div id="root"></div>
-
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyCLx6XKvsKhdhX-p1RhIihVy4_BT78r4pU",
@@ -28,11 +26,9 @@
       messagingSenderId: "94532746370",
       appId: "1:94532746370:web:07a730c47040ac2347889b"
     };
-
     firebase.initializeApp(firebaseConfig);
     window.db = firebase.firestore();
   </script>
-
   <script type="text/babel">
 window.storage = {
   async get(key) {
@@ -60,9 +56,7 @@ window.storage = {
     }
   },
   async delete(key) {
-    try {
-      await window.db.collection("appdata").doc(key).delete();
-    } catch(e) {}
+    try { await window.db.collection("appdata").doc(key).delete(); } catch(e) {}
     localStorage.removeItem("ml_" + key);
     return { key, deleted: true };
   },
@@ -70,9 +64,7 @@ window.storage = {
     const keys = [];
     try {
       const snap = await window.db.collection("appdata").get();
-      snap.forEach(doc => {
-        if (!prefix || doc.id.startsWith(prefix)) keys.push(doc.id);
-      });
+      snap.forEach(doc => { if (!prefix || doc.id.startsWith(prefix)) keys.push(doc.id); });
     } catch(e) {}
     return { keys };
   }
@@ -253,24 +245,24 @@ function calcBenefitPeriods(birthDate) {
 
 // --- Styles as CSS variables ---
 const COLORS = {
-  bg: "#0f1117",
-  surface: "#1a1d27",
-  surfaceHover: "#222636",
-  border: "#2a2e3d",
-  borderLight: "#363b4f",
-  primary: "#4f8cff",
-  primaryDark: "#3a6fd8",
-  accent: "#ff6b8a",
-  accentGreen: "#34d399",
-  accentYellow: "#fbbf24",
-  accentOrange: "#f97316",
-  text: "#e8eaed",
-  textMuted: "#8b8fa3",
-  textDim: "#5c6078",
-  danger: "#ef4444",
-  prenatal: "#8b5cf6",
-  postpartum: "#ec4899",
-  childcare: "#06b6d4",
+  bg: "#f5f7fa",
+  surface: "#ffffff",
+  surfaceHover: "#f0f2f5",
+  border: "#e2e5ea",
+  borderLight: "#d0d4dc",
+  primary: "#2563eb",
+  primaryDark: "#1d4ed8",
+  accent: "#e84073",
+  accentGreen: "#16a34a",
+  accentYellow: "#d97706",
+  accentOrange: "#ea580c",
+  text: "#1a1a2e",
+  textMuted: "#64748b",
+  textDim: "#94a3b8",
+  danger: "#dc2626",
+  prenatal: "#7c3aed",
+  postpartum: "#db2777",
+  childcare: "#0891b2",
 };
 
 // --- Icon Components ---
@@ -891,7 +883,7 @@ function MaternityLeaveApp() {
   return (
     <div style={{
       fontFamily: "'Noto Sans JP', 'Hiragino Sans', sans-serif",
-      background: `linear-gradient(135deg, ${COLORS.bg} 0%, #141824 100%)`,
+      background: `linear-gradient(135deg, ${COLORS.bg} 0%, #e8ecf4 100%)`,
       color: COLORS.text, minHeight: "100vh",
       fontSize: 13,
     }}>
@@ -1080,7 +1072,7 @@ function MaternityLeaveApp() {
 
       {/* Header */}
       <header data-no-print style={{
-        background: `${COLORS.surface}cc`, backdropFilter: "blur(20px)",
+        background: `${COLORS.surface}ee`, backdropFilter: "blur(20px)",
         borderBottom: `1px solid ${COLORS.border}`,
         padding: "10px 16px", position: "sticky", top: 0, zIndex: 100,
         display: "flex", alignItems: "center", justifyContent: "space-between",
@@ -1179,16 +1171,20 @@ function MaternityLeaveApp() {
             {/* Stats Row */}
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 12, marginBottom: 24 }}>
               {[
-                { label: "総登録数", value: data.length, color: COLORS.primary, icon: <Icons.Baby /> },
-                { label: "対応中", value: data.filter(d => !d.returnDate).length, color: COLORS.accent, icon: <Icons.Clock /> },
-                { label: "復帰済", value: data.filter(d => d.returnDate).length, color: COLORS.accentGreen, icon: <Icons.Check /> },
-                { label: "期限超過", value: upcomingDeadlines.filter(d => d.diff < 0 && !dismissedItems.has(`${d.person.id}-${d.type}`)).length, color: COLORS.danger, icon: <Icons.Alert /> },
+                { label: "総登録数", value: data.length, color: COLORS.primary, icon: <Icons.Baby />, action: () => setCurrentView("list") },
+                { label: "対応中", value: data.filter(d => !d.returnDate).length, color: COLORS.accent, icon: <Icons.Clock />, action: () => { setFilterStaff(""); setFilterCompany(""); setCurrentView("list"); } },
+                { label: "復帰済", value: data.filter(d => d.returnDate).length, color: COLORS.accentGreen, icon: <Icons.Check />, action: () => { setFilterStaff(""); setFilterCompany(""); setCurrentView("list"); } },
+                { label: "期限超過", value: upcomingDeadlines.filter(d => d.diff < 0 && !dismissedItems.has(`${d.person.id}-${d.type}`)).length, color: COLORS.danger, icon: <Icons.Alert />, action: () => setCurrentView("schedule") },
               ].map((stat, i) => (
-                <div key={i} style={{
+                <div key={i} onClick={stat.action} style={{
                   background: COLORS.surface, borderRadius: 14,
                   border: `1px solid ${COLORS.border}`, padding: "18px 20px",
                   animation: `fadeIn 0.3s ease ${i * 0.05}s both`,
-                }}>
+                  cursor: "pointer", transition: "all 0.2s",
+                }}
+                  onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = `0 4px 12px ${stat.color}20`; }}
+                  onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; }}
+                >
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
                     <span style={{ color: COLORS.textMuted, fontSize: 11, fontWeight: 500 }}>{stat.label}</span>
                     <span style={{ color: stat.color, opacity: 0.7 }}>{stat.icon}</span>
