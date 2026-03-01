@@ -15,11 +15,36 @@
 <body>
   <div id="root"></div>
   <script>
-    const firebaseConfig={apiKey:"AIzaSyCLx6XKvsKhdhX-p1RhIihVy4_BT78r4pU",authDomain:"maternity-leave-e4375.firebaseapp.com",projectId:"maternity-leave-e4375",storageBucket:"maternity-leave-e4375.firebasestorage.app",messagingSenderId:"94532746370",appId:"1:94532746370:web:07a730c47040ac2347889b"};
-    firebase.initializeApp(firebaseConfig);window.db=firebase.firestore();
+    try {
+      const firebaseConfig={apiKey:"AIzaSyCLx6XKvsKhdhX-p1RhIihVy4_BT78r4pU",authDomain:"maternity-leave-e4375.firebaseapp.com",projectId:"maternity-leave-e4375",storageBucket:"maternity-leave-e4375.firebasestorage.app",messagingSenderId:"94532746370",appId:"1:94532746370:web:07a730c47040ac2347889b"};
+      firebase.initializeApp(firebaseConfig);
+      window.db=firebase.firestore();
+      window._fbReady = true;
+    } catch(e) {
+      console.warn("Firebase init failed:", e);
+      window._fbReady = false;
+    }
   </script>
   <script type="text/babel">
-window.storage={async get(key){try{const doc=await window.db.collection("appdata").doc(key).get();if(!doc.exists)throw new Error("Key not found");return{key,value:doc.data().value}}catch(e){const val=localStorage.getItem("ml_"+key);if(val===null)throw new Error("Key not found");return{key,value:val}}},async set(key,value){try{await window.db.collection("appdata").doc(key).set({value,updatedAt:firebase.firestore.FieldValue.serverTimestamp()});localStorage.setItem("ml_"+key,value);return{key,value}}catch(e){localStorage.setItem("ml_"+key,value);return{key,value}}},async delete(key){try{await window.db.collection("appdata").doc(key).delete()}catch(e){}localStorage.removeItem("ml_"+key);return{key,deleted:true}},async list(prefix){const keys=[];try{const snap=await window.db.collection("appdata").get();snap.forEach(doc=>{if(!prefix||doc.id.startsWith(prefix))keys.push(doc.id)})}catch(e){}return{keys}}};
+window.storage={
+  async get(key){
+    if(window._fbReady){try{const doc=await window.db.collection("appdata").doc(key).get();if(doc.exists)return{key,value:doc.data().value}}catch(e){}}
+    const val=localStorage.getItem("ml_"+key);if(val===null)throw new Error("Key not found");return{key,value:val}
+  },
+  async set(key,value){
+    if(window._fbReady){try{await window.db.collection("appdata").doc(key).set({value,updatedAt:firebase.firestore.FieldValue.serverTimestamp()});localStorage.setItem("ml_"+key,value);return{key,value}}catch(e){}}
+    localStorage.setItem("ml_"+key,value);return{key,value}
+  },
+  async delete(key){
+    if(window._fbReady){try{await window.db.collection("appdata").doc(key).delete()}catch(e){}}
+    localStorage.removeItem("ml_"+key);return{key,deleted:true}
+  },
+  async list(prefix){
+    const keys=[];
+    if(window._fbReady){try{const snap=await window.db.collection("appdata").get();snap.forEach(doc=>{if(!prefix||doc.id.startsWith(prefix))keys.push(doc.id)})}catch(e){}}
+    return{keys}
+  }
+};
 const { useState, useEffect, useMemo, useCallback, useRef } = React;
 
 // ============================================================
@@ -407,7 +432,7 @@ function MaternityLeaveApp() {
   const [showPrintPreview, setShowPrintPreview] = useState(false);
   const [flowchartPreview, setFlowchartPreview] = useState(null);
 
-  const today = "2026-02-23";
+  const today = new Date().toISOString().split("T")[0];
 
   // --- Load from persistent storage on mount ---
   useEffect(() => {
@@ -591,7 +616,8 @@ function MaternityLeaveApp() {
       g.fillStyle="#fff"; g.fillRect(0,0,W,H);
       g.fillStyle="#1a56db"; g.fillRect(0,0,W,3);
       g.fillStyle="#1a1a1a"; g.font='9px sans-serif'; g.fillText("\uFF08\u793E\u540D\uFF09  "+person.company,30,28);
-      g.fillStyle="#555"; g.font='8px sans-serif'; g.fillText("2026\u5E74 2\u6708 23\u65E5 \u73FE\u5728",640,28);
+      var nowD = new Date(); var nowStr = nowD.getFullYear()+"\u5E74 "+(nowD.getMonth()+1)+"\u6708 "+nowD.getDate()+"\u65E5 \u73FE\u5728";
+      g.fillStyle="#555"; g.font='8px sans-serif'; g.fillText(nowStr,640,28);
       g.fillStyle="#1a1a1a"; g.font='9px sans-serif'; g.fillText("\uFF08\u52B4\u50CD\u8005\uFF09  "+person.name+"\u3000\u69D8\u5206",30,42);
       g.font='bold 14px sans-serif'; g.fillText("\u7523\u4F11\u30FB\u80B2\u4F11\u3000\u30D5\u30ED\u30FC\u30C1\u30E3\u30FC\u30C8 \uFF1A",155,62);
       g.fillStyle = useBirth ? "#1a56db" : "#d97706";
