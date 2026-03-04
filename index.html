@@ -17,33 +17,15 @@
   <script>
     try {
       const firebaseConfig={apiKey:"AIzaSyCLx6XKvsKhdhX-p1RhIihVy4_BT78r4pU",authDomain:"maternity-leave-e4375.firebaseapp.com",projectId:"maternity-leave-e4375",storageBucket:"maternity-leave-e4375.firebasestorage.app",messagingSenderId:"94532746370",appId:"1:94532746370:web:07a730c47040ac2347889b"};
-      firebase.initializeApp(firebaseConfig);
-      window.db=firebase.firestore();
-      window._fbReady = true;
-    } catch(e) {
-      console.warn("Firebase init failed:", e);
-      window._fbReady = false;
-    }
+      firebase.initializeApp(firebaseConfig);window.db=firebase.firestore();window._fbReady=true;
+    } catch(e) { console.warn("Firebase init failed:",e); window._fbReady=false; }
   </script>
   <script type="text/babel">
 window.storage={
-  async get(key){
-    if(window._fbReady){try{const doc=await window.db.collection("appdata").doc(key).get();if(doc.exists)return{key,value:doc.data().value}}catch(e){}}
-    const val=localStorage.getItem("ml_"+key);if(val===null)throw new Error("Key not found");return{key,value:val}
-  },
-  async set(key,value){
-    if(window._fbReady){try{await window.db.collection("appdata").doc(key).set({value,updatedAt:firebase.firestore.FieldValue.serverTimestamp()});localStorage.setItem("ml_"+key,value);return{key,value}}catch(e){}}
-    localStorage.setItem("ml_"+key,value);return{key,value}
-  },
-  async delete(key){
-    if(window._fbReady){try{await window.db.collection("appdata").doc(key).delete()}catch(e){}}
-    localStorage.removeItem("ml_"+key);return{key,deleted:true}
-  },
-  async list(prefix){
-    const keys=[];
-    if(window._fbReady){try{const snap=await window.db.collection("appdata").get();snap.forEach(doc=>{if(!prefix||doc.id.startsWith(prefix))keys.push(doc.id)})}catch(e){}}
-    return{keys}
-  }
+  async get(key){if(window._fbReady){try{const doc=await window.db.collection("appdata").doc(key).get();if(doc.exists)return{key,value:doc.data().value}}catch(e){}}const val=localStorage.getItem("ml_"+key);if(val===null)throw new Error("Key not found");return{key,value:val}},
+  async set(key,value){if(window._fbReady){try{await window.db.collection("appdata").doc(key).set({value,updatedAt:firebase.firestore.FieldValue.serverTimestamp()});localStorage.setItem("ml_"+key,value);return{key,value}}catch(e){}}localStorage.setItem("ml_"+key,value);return{key,value}},
+  async delete(key){if(window._fbReady){try{await window.db.collection("appdata").doc(key).delete()}catch(e){}}localStorage.removeItem("ml_"+key);return{key,deleted:true}},
+  async list(prefix){const keys=[];if(window._fbReady){try{const snap=await window.db.collection("appdata").get();snap.forEach(doc=>{if(!prefix||doc.id.startsWith(prefix))keys.push(doc.id)})}catch(e){}}return{keys}}
 };
 const { useState, useEffect, useMemo, useCallback, useRef } = React;
 
@@ -636,12 +618,13 @@ function MaternityLeaveApp() {
       g.font='7.5px sans-serif'; g.fillText("50\u4E07\u5186\uFF08\u51FA\u7523\u8CBB\u7528\u306B\u51FA\u7523\u4E00\u6642\u91D1\u3092\u76F4\u63A5\u5145\u3066\u308B\u5236\u5EA6\uFF09\u2192\u51FA\u7523\u3055\u308C\u308B\u533B\u7642\u6A5F\u95A2\u3078\u59D4\u4EFB",130,y1+11);
       g.fillStyle="#555"; g.font='6px sans-serif'; g.fillText("\u2191\u7523\u79D1\u533B\u7642\u88DC\u511F\u5236\u5EA6\u52A0\u5165\u75C5\u9662\u306B\u3066\u51FA\u7523\u306E\u5834\u5408\uFF08\u672A\u52A0\u5165\u75C5\u9662\u306E\u5834\u5408\u306F48.8\u4E07\u5186\uFF09",140,y1+24);
       var y2=y1+42; rr(28,y2,95,15,2,"#dbeafe"); g.fillStyle="#1a1a1a"; g.font='8px sans-serif'; g.fillText("\u51FA \u7523 \u624B \u5F53 \u91D1",35,y2+11);
-      rr(245,y2,185,15,2,"#bfdbfe"); g.fillText("\u7523\u524D\u7523\u5F8C\u4F11\u696D\u30FB\u80B2\u5150\u4F11\u696D  \u53D6\u5F97\u7533\u51FA",252,y2+11);
-      g.fillStyle="#555"; g.font='6.5px sans-serif'; g.fillText("\u5065\u5EB7\u4FDD\u967A\u30FB\u539A\u751F\u5E74\u91D1\u4FDD\u967A\u6599 \u514D\u9664\u671F\u9593\uFF1A",440,y2+10);
+      rr(245,y2,185,15,2,"#bfdbfe"); g.fillStyle="#1a1a1a"; g.font='8px sans-serif'; g.fillText("\u7523\u524D\u7523\u5F8C\u4F11\u696D\u30FB\u80B2\u5150\u4F11\u696D  \u53D6\u5F97\u7533\u51FA",252,y2+11);
+      g.fillStyle="#555"; g.font='6.5px sans-serif'; g.fillText("\u5065\u5EB7\u4FDD\u967A\u30FB\u539A\u751F\u5E74\u91D1\u4FDD\u967A\u6599  \u514D\u9664\u671F\u9593 \uFF1A",440,y2+10);
       var exemptStart = (useBirth && hasDue && baseDate < ps) ? baseDate : ps;
       g.fillStyle="#dc2626"; g.font='bold 7px sans-serif'; g.fillText(fy(exemptStart)+" \uFF5E "+fy(c1),600,y2+10);
       g.fillStyle="#555"; g.font='7px sans-serif'; g.fillText("\u2193 \u5BFE\u8C61\u671F\u9593\u3001\u6A19\u6E96\u5831\u916C\u65E5\u984D\u306E\uFF12\uFF0F\uFF13\u76F8\u5F53\u984D",135,y2+26);
-      g.fillText("\u7523\u5F8C\u4F11\u6687\u6E80\u4E86\u5F8C\u306B\u5354\u4F1A\u3051\u3093\u307D\u3078\u63D0\u51FA",135,y2+37);
+      var submitTo = person.company.includes("\u30C6\u30AF\u30CE\u30C7\u30B8\u30BF\u30EB") ? "TJK" : "\u5354\u4F1A\u3051\u3093\u307D";
+      g.fillText("\u7523\u5F8C\u4F11\u6687\u6E80\u4E86\u5F8C\u306B"+submitTo+"\u3078\u63D0\u51FA",135,y2+37);
       // Early birth detection: birth before prenatal start date
       var isEarly = useBirth && hasDue && (baseDate < ps);
       var yt=y2+62;
@@ -685,13 +668,14 @@ function MaternityLeaveApp() {
         g.font='bold 7.5px sans-serif'; g.fillText(fd(baseDate)+" "+label,140,yt+42);
         g.fillStyle="#555"; g.font='6.5px sans-serif'; g.fillText("\u7523\u524D",85,yt+52); g.fillText("\u7523\u5F8C56\u65E5",220,yt+52); g.fillText("\u7523\u5F8C57\u65E5",360,yt+52);
       }
-      var yb=yt+62; rr(375,yb,200,15,2,"#fef9c3"); g.fillStyle="#1a1a1a"; g.font='8px sans-serif'; g.fillText("\u80B2\u5150\u4F11\u696D\u7D66\u4ED8\u91D1",425,yb+11);
-      g.fillStyle="#555"; g.font='6.5px sans-serif'; g.fillText("10\u65E5\u4EE5\u5185 \u2193",375,yb+28);
-      g.fillStyle="#1a1a1a"; g.font='7.5px sans-serif'; g.fillText("\u30FB\u96C7\u7528\u4FDD\u967A\u80B2\u5150\u4F11\u696D\u7D66\u4ED8\u306E\u53D7\u7D66\u8CC7\u683C\u78BA\u8A8D\u624B\u7D9A\u304D\uFF08\u6BCD\u5B50\u624B\u5E33\u30FB\u901A\u5E33\u5199\u3057\u5FC5\u8981\uFF09",135,yb+44);
-      g.fillStyle="#1a56db"; g.fillText("\u4EE5\u5F8C\u30012\u30F6\u6708\u6BCE\u306B\u652F\u7D66\u7533\u8ACB\u624B\u7D9A\u304D",470,yb+44);
-      g.fillStyle="#555"; g.font='6px sans-serif'; g.fillText("\u203B\u53D7\u7D66\u8CC7\u683C\u78BA\u8A8D\u624B\u7D9A\u304D\u3068\u521D\u56DE\u306E\u652F\u7D66\u7533\u8ACB\u3092\u540C\u6642\u306B\u884C\u3046\u5834\u5408",145,yb+56);
-      g.fillText("\u80B2\u5150\u4F11\u696D\u958B\u59CB\u65E5\u304B\u30894\u30F6\u6708\u3092\u7D4C\u904E\u3059\u308B\u65E5\u306E\u5C5E\u3059\u308B\u6708\u672B\u65E5\u307E\u3067\uFF01",155,yb+66);
-      var ye=yb+86; rr(28,ye,95,18,3,"#16a34a"); g.fillStyle="#fff"; g.font='bold 9px sans-serif'; g.fillText("\u96C7 \u7528 \u4FDD \u967A",36,ye+13);
+      var yb=yt+70; rr(355,yb,200,15,2,"#fef9c3"); g.fillStyle="#1a1a1a"; g.font='8px sans-serif'; g.fillText("\u80B2\u5150\u4F11\u696D\u7D66\u4ED8\u91D1",400,yb+11);
+      g.fillStyle="#555"; g.font='6.5px sans-serif'; g.fillText("10\u65E5\u4EE5\u5185 \u2193",355,yb+28);
+      var yp=yb+40;
+      g.fillStyle="#1a1a1a"; g.font='7.5px sans-serif'; g.fillText("\u30FB\u96C7\u7528\u4FDD\u967A\u80B2\u5150\u4F11\u696D\u7D66\u4ED8\u306E\u53D7\u7D66\u8CC7\u683C\u78BA\u8A8D\u624B\u7D9A\u304D\uFF08\u6BCD\u5B50\u624B\u5E33\u30FB\u901A\u5E33\u5199\u3057\u5FC5\u8981\uFF09",135,yp);
+      g.fillStyle="#1a56db"; g.fillText("\u4EE5\u5F8C\u30012\u30F6\u6708\u6BCE\u306B\u652F\u7D66\u7533\u8ACB\u624B\u7D9A\u304D",470,yp);
+      g.fillStyle="#555"; g.font='6px sans-serif'; g.fillText("\u203B\u53D7\u7D66\u8CC7\u683C\u78BA\u8A8D\u624B\u7D9A\u304D\u3068\u521D\u56DE\u306E\u652F\u7D66\u7533\u8ACB\u3092\u540C\u6642\u306B\u884C\u3046\u5834\u5408",145,yp+12);
+      g.fillText("\u80B2\u5150\u4F11\u696D\u958B\u59CB\u65E5\u304B\u30894\u30F6\u6708\u3092\u7D4C\u904E\u3059\u308B\u65E5\u306E\u5C5E\u3059\u308B\u6708\u672B\u65E5\u307E\u3067\uFF01",155,yp+23);
+      var ye=yp+44; rr(28,ye,95,18,3,"#16a34a"); g.fillStyle="#fff"; g.font='bold 9px sans-serif'; g.fillText("\u96C7 \u7528 \u4FDD \u967A",36,ye+13);
       rr(128,ye,135,18,3,"#dcfce7"); g.fillStyle="#1a1a1a"; g.font='8px sans-serif'; g.fillText("\u80B2 \u5150 \u4F11 \u696D \u7D66 \u4ED8 \u91D1",133,ye+13);
       g.fillText("\u8CCC\u91D1\u6708\u984D \u00D7 \u226A\u958B\u59CB\u304B\u3089180\u65E5\u76EE\u307E\u3067 67\uFF05\u30FB181\u65E5\u76EE\u304B\u3089 50\uFF05\u226B",270,ye+13);
       g.fillStyle="#555"; g.font='6.5px sans-serif'; g.fillText("\uFF08\u4F11\u696D\u958B\u59CB\u6642\u8CCC\u91D1\u65E5\u984D\u00D7\u652F\u7D66\u65E5\u6570\uFF09",270,ye+26);
@@ -700,7 +684,7 @@ function MaternityLeaveApp() {
       g.fillText("\u203B\u96C7\u7528\u4FDD\u967A\u306E\u80B2\u5150\u4F11\u696D\u7D66\u4ED8\u91D1\u306B\u3064\u3044\u3066\u3001\u5B50\u304C1\u6B73\u306B\u9054\u3059\u308B\u65E5\u4EE5\u964D\u3082\u80B2\u5150\u4F11\u696D\u3092\u53D6\u5F97\u3059\u308B\u5834\u5408\u306F\u30012\u6B73\u306B\u9054\u3059\u308B\u524D\u65E5\u307E\u3067\u671F\u9593\u5EF6\u9577\u304C\u51FA\u6765\u307E\u3059\u3002",25,H-30);
       g.fillText("\u3057\u304B\u3057\u3001\u8A8D\u53EF\u4FDD\u80B2\u6240\u306B\u5165\u308C\u306A\u3044\u30FB\u990A\u80B2\u56F0\u96E3\u306A\u72B6\u614B\u306B\u306A\u3063\u305F\u5834\u5408\u306B\u306E\u307F\u652F\u7D66\u3055\u308C\u307E\u3059\u3002\u203B\u6DFB\u4ED8\u66F8\u985E\u304C\u5FC5\u8981\u3067\u3059\u203B",35,H-19);
       g.fillStyle="#1a56db"; g.fillRect(0,H-8,W,2);
-      setFlowchartPreview({ name: person.name + (useBirth ? " (\u5B9F\u51FA\u7523)" : " (\u4E88\u5B9A\u65E5)"), dataUrl: cv.toDataURL("image/png") });
+      setFlowchartPreview({ name: person.name + (useBirth ? " (\u5B9F\u51FA\u7523)" : " (\u4E88\u5B9A\u65E5)"), dataUrl: cv.toDataURL("image/png"), canvasW: W, canvasH: H });
     } catch(e) { console.error("PDF gen error:",e); alert("\u751F\u6210\u30A8\u30E9\u30FC: "+e.message); }
   };
   const filteredData = useMemo(() => {
@@ -2422,14 +2406,40 @@ function MaternityLeaveApp() {
             display: "flex", flexDirection: "column", gap: 8, boxShadow: "0 20px 60px rgba(0,0,0,0.3)",
             width: "100%",
           }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 8 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 8 }}>
               <div style={{ fontWeight: 700, fontSize: 13, color: "#1a1a1a" }}>
                 フローチャート — {flowchartPreview.name}
               </div>
               <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
-                <span style={{ fontSize: 10, color: "#888" }}>
-                  画像を長押し/右クリックで保存
-                </span>
+                <button onClick={() => {
+                  const link = document.createElement("a");
+                  link.download = `フローチャート_${flowchartPreview.name}.png`;
+                  link.href = flowchartPreview.dataUrl;
+                  link.click();
+                }} style={{
+                  padding: "5px 14px", borderRadius: 6, border: "1px solid #059669",
+                  background: "#ecfdf5", color: "#059669", fontSize: 12, cursor: "pointer", fontFamily: "inherit", fontWeight: 500,
+                }}>📷 画像保存</button>
+                <button onClick={async () => {
+                  try {
+                    if (!window._jspdfLoaded) {
+                      await new Promise((resolve, reject) => {
+                        const s = document.createElement("script");
+                        s.src = "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
+                        s.onload = () => { window._jspdfLoaded = true; resolve(); };
+                        s.onerror = reject;
+                        document.head.appendChild(s);
+                      });
+                    }
+                    const { jsPDF } = window.jspdf;
+                    const pdf = new jsPDF({ orientation: "landscape", unit: "px", format: [flowchartPreview.canvasW, flowchartPreview.canvasH] });
+                    pdf.addImage(flowchartPreview.dataUrl, "PNG", 0, 0, flowchartPreview.canvasW, flowchartPreview.canvasH);
+                    pdf.save(`フローチャート_${flowchartPreview.name}.pdf`);
+                  } catch(e) { console.error(e); alert("PDF生成に失敗しました: " + e.message); }
+                }} style={{
+                  padding: "5px 14px", borderRadius: 6, border: "1px solid #1a56db",
+                  background: "#eff6ff", color: "#1a56db", fontSize: 12, cursor: "pointer", fontFamily: "inherit", fontWeight: 500,
+                }}>📄 PDF保存</button>
                 <button onClick={() => setFlowchartPreview(null)} style={{
                   padding: "5px 14px", borderRadius: 6, border: "1px solid #ccc",
                   background: "#f5f5f5", color: "#333", fontSize: 12, cursor: "pointer", fontFamily: "inherit",
