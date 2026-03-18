@@ -150,7 +150,7 @@ function daysBetween(d1, d2) {
 
 function calcPrenatalStart(dueDate, multiple) {
   if (!dueDate) return "";
-  return addDays(dueDate, multiple === "有" ? -98 : -42);
+  return addDays(dueDate, multiple === "有" ? -97 : -41);
 }
 
 function calcPostpartumEnd(birthDate) {
@@ -586,7 +586,7 @@ function MaternityLeaveApp() {
       const label = useBirth ? "(実出産)" : "(出産予定日)";
       const multi = person.multiple === "有";
       const addD = (d, n) => { const r = new Date(d); r.setDate(r.getDate() + n); return r; };
-      const ps = new Date(due); ps.setDate(ps.getDate() - (multi ? 98 : 42));
+      const ps = new Date(due); ps.setDate(ps.getDate() - (multi ? 97 : 41));
       const pe = addD(baseDate, 56), cs = addD(baseDate, 57);
       const c1 = new Date(baseDate); c1.setFullYear(c1.getFullYear() + 1); c1.setDate(c1.getDate() - 1);
       const fd = (d) => d.getFullYear() + "\u5E74" + (d.getMonth()+1) + "\u6708" + d.getDate() + "\u65E5";
