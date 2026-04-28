@@ -621,7 +621,14 @@ function MaternityLeaveApp() {
       rr(245,y2,185,15,2,"#bfdbfe"); g.fillStyle="#1a1a1a"; g.font='8px sans-serif'; g.fillText("\u7523\u524D\u7523\u5F8C\u4F11\u696D\u30FB\u80B2\u5150\u4F11\u696D  \u53D6\u5F97\u7533\u51FA",252,y2+11);
       g.fillStyle="#555"; g.font='6.5px sans-serif'; g.fillText("\u5065\u5EB7\u4FDD\u967A\u30FB\u539A\u751F\u5E74\u91D1\u4FDD\u967A\u6599  \u514D\u9664\u671F\u9593 \uFF1A",440,y2+10);
       var exemptStart = (useBirth && hasDue && baseDate < ps) ? baseDate : ps;
-      g.fillStyle="#dc2626"; g.font='bold 7px sans-serif'; g.fillText(fy(exemptStart)+" \uFF5E "+fy(c1),600,y2+10);
+      // 免除期間終了月 = 育休終了日の翌日が属する月の前月
+      var c1next = new Date(c1); c1next.setDate(c1next.getDate() + 1); // 育休終了日の翌日
+      var exemptEndMonth = c1next.getMonth(); // 翌日の月(0-indexed)
+      var exemptEndYear = c1next.getFullYear();
+      if (exemptEndMonth === 0) { exemptEndMonth = 12; exemptEndYear--; } // 1月→前年12月
+      else { /* そのまま前月 */ }
+      var exemptEndStr = exemptEndYear + "\u5E74 " + exemptEndMonth + "\u6708";
+      g.fillStyle="#dc2626"; g.font='bold 7px sans-serif'; g.fillText(fy(exemptStart)+" \uFF5E "+exemptEndStr,600,y2+10);
       g.fillStyle="#555"; g.font='7px sans-serif'; g.fillText("\u2193 \u5BFE\u8C61\u671F\u9593\u3001\u6A19\u6E96\u5831\u916C\u65E5\u984D\u306E\uFF12\uFF0F\uFF13\u76F8\u5F53\u984D",135,y2+26);
       var submitTo = person.company.includes("\u30C6\u30AF\u30CE\u30C7\u30B8\u30BF\u30EB") ? "TJK" : "\u5354\u4F1A\u3051\u3093\u307D";
       g.fillText("\u7523\u5F8C\u4F11\u6687\u6E80\u4E86\u5F8C\u306B"+submitTo+"\u3078\u63D0\u51FA",135,y2+37);
