@@ -601,16 +601,27 @@ function MaternityLeaveApp() {
       var nowD = new Date(); var nowStr = nowD.getFullYear()+"\u5E74 "+(nowD.getMonth()+1)+"\u6708 "+nowD.getDate()+"\u65E5 \u73FE\u5728";
       g.fillStyle="#555"; g.font='8px sans-serif'; g.fillText(nowStr,640,28);
       g.fillStyle="#1a1a1a"; g.font='9px sans-serif'; g.fillText("\uFF08\u52B4\u50CD\u8005\uFF09  "+person.name+"\u3000\u69D8\u5206",30,42);
-      g.font='bold 14px sans-serif'; g.fillText("\u7523\u4F11\u30FB\u80B2\u4F11\u3000\u30D5\u30ED\u30FC\u30C1\u30E3\u30FC\u30C8 \uFF1A",155,62);
-      g.fillStyle = useBirth ? "#1a56db" : "#d97706";
-      g.fillText(fd(baseDate)+"\u3000\u3000"+label,370,62);
-      // If showing due date, also note actual birth if available
-      if (!useBirth && hasBirth) {
-        g.fillStyle="#dc2626"; g.font='9px sans-serif';
-        g.fillText("\u203B\u5B9F\u51FA\u7523\u65E5: "+fd(new Date(person.birthDate)),370,76);
+      var isPapa = person.papaLeave === "\u6709";
+      var papaDays = parseInt(person.papaDays) || 28;
+      if (isPapa) {
+        g.font='bold 14px sans-serif'; g.fillStyle="#1a1a1a";
+        g.fillText("\u80B2\u4F11\u3000\u30D5\u30ED\u30FC\u30C1\u30E3\u30FC\u30C8 \uFF1A",155,62);
+        g.fillStyle="#1a56db";
+        g.fillText(fd(baseDate)+"\u3000\u3000(\u51FA\u751F\u65E5)",370,62);
+        g.fillStyle="#555"; g.font='8px sans-serif';
+        g.fillText("\u226A\u51FA\u751F\u6642\u80B2\u5150\u4F11\u696D"+papaDays+"\u65E5\u9593 \uFF0B \u80B2\u5150\u4F11\u696D\u3092\u53D6\u5F97\u3059\u308B\u5834\u5408\u226B",240,78);
+      } else {
+        g.font='bold 14px sans-serif'; g.fillText("\u7523\u4F11\u30FB\u80B2\u4F11\u3000\u30D5\u30ED\u30FC\u30C1\u30E3\u30FC\u30C8 \uFF1A",155,62);
+        g.fillStyle = useBirth ? "#1a56db" : "#d97706";
+        g.fillText(fd(baseDate)+"\u3000\u3000"+label,370,62);
+        // If showing due date, also note actual birth if available
+        if (!useBirth && hasBirth) {
+          g.fillStyle="#dc2626"; g.font='9px sans-serif';
+          g.fillText("\u203B\u5B9F\u51FA\u7523\u65E5: "+fd(new Date(person.birthDate)),370,76);
+        }
+        g.fillStyle="#555"; g.font='8px sans-serif'; g.fillText("\u226A\u5B50\u304C1\u6B73\u306B\u306A\u308B\u307E\u3067\u80B2\u5150\u4F11\u696D\u30921\u56DE\u53D6\u5F97\u3059\u308B\u5834\u5408\u226B",240,useBirth ? 78 : 90);
       }
-      g.fillStyle="#555"; g.font='8px sans-serif'; g.fillText("\u226A\u5B50\u304C1\u6B73\u306B\u306A\u308B\u307E\u3067\u80B2\u5150\u4F11\u696D\u30921\u56DE\u53D6\u5F97\u3059\u308B\u5834\u5408\u226B",240,useBirth ? 78 : 90);
-      var sy = useBirth ? 85 : 97;
+      var sy = isPapa ? 85 : (useBirth ? 85 : 97);
       g.strokeStyle="#d1d5db"; g.lineWidth=0.5; g.beginPath(); g.moveTo(25,sy); g.lineTo(W-25,sy); g.stroke();
       rr(28,sy+5,95,18,3,"#1a56db"); g.fillStyle="#fff"; g.font='bold 9px sans-serif'; g.fillText("\u793E \u4F1A \u4FDD \u967A",36,sy+18);
       g.fillStyle="#555"; g.font='7px sans-serif'; g.fillText("\u203B\u57FA\u672C\u7684\u306B\u7523\u524D\u7523\u5F8C\u4F11\u696D \u304A\u3088\u3073 \u80B2\u5150\u4F11\u696D \u671F\u9593\u4E2D \u306F \u4E8B\u696D\u4E3B\u30FB\u672C\u4EBA\u8CA0\u62C5\u306E\u4FDD\u967A\u6599\u306F\u514D\u9664\u3055\u308C\u307E\u3059\u3002",130,sy+18);
@@ -620,7 +631,14 @@ function MaternityLeaveApp() {
       var y2=y1+42; rr(28,y2,95,15,2,"#dbeafe"); g.fillStyle="#1a1a1a"; g.font='8px sans-serif'; g.fillText("\u51FA \u7523 \u624B \u5F53 \u91D1",35,y2+11);
       rr(245,y2,185,15,2,"#bfdbfe"); g.fillStyle="#1a1a1a"; g.font='8px sans-serif'; g.fillText("\u7523\u524D\u7523\u5F8C\u4F11\u696D\u30FB\u80B2\u5150\u4F11\u696D  \u53D6\u5F97\u7533\u51FA",252,y2+11);
       g.fillStyle="#555"; g.font='6.5px sans-serif'; g.fillText("\u5065\u5EB7\u4FDD\u967A\u30FB\u539A\u751F\u5E74\u91D1\u4FDD\u967A\u6599  \u514D\u9664\u671F\u9593 \uFF1A",440,y2+10);
-      var exemptStart = (useBirth && hasDue && baseDate < ps) ? baseDate : ps;
+      var exemptStart;
+      if (isPapa) {
+        exemptStart = baseDate; // パパ育休: 出生日の月から
+      } else if (useBirth && hasDue && baseDate < ps) {
+        exemptStart = baseDate; // 早産: 出生日の月から
+      } else {
+        exemptStart = ps; // 通常: 産前休業開始月から
+      }
       // 免除期間終了月 = 育休終了日の翌日が属する月の前月
       var c1next = new Date(c1); c1next.setDate(c1next.getDate() + 1); // 育休終了日の翌日
       var exemptEndMonth = c1next.getMonth(); // 翌日の月(0-indexed)
@@ -634,8 +652,40 @@ function MaternityLeaveApp() {
       g.fillText("\u7523\u5F8C\u4F11\u6687\u6E80\u4E86\u5F8C\u306B"+submitTo+"\u3078\u63D0\u51FA",135,y2+37);
       // Early birth detection: birth before prenatal start date
       var isEarly = useBirth && hasDue && (baseDate < ps);
+      var isPapa = person.papaLeave === "\u6709";
+      var papaDays = parseInt(person.papaDays) || 28;
       var yt=y2+62;
-      if (isEarly) {
+
+      if (isPapa) {
+        // === パパ育休フローチャート ===
+
+        // 出産手当金→育休免除申請に変更
+        g.fillStyle="#555"; g.font='7px sans-serif';
+        g.fillText("\u2193 \u80B2\u5150\u4F11\u696D\u53D6\u5F97\u7533\u51FA\u66F8\u3092\u4E8B\u524D\u306B\u63D0\u51FA",135,y2+26);
+        g.fillText("",135,y2+37);
+
+        // 出生時育児休業ブロック (水色)
+        var papaEnd = addD(baseDate, papaDays - 1);
+        var ikujiStart = addD(baseDate, papaDays);
+        rr(35,yt,200,26,3,"#dbeafe"); g.fillStyle="#1a1a1a"; g.font='7.5px sans-serif';
+        g.fillText(fd(baseDate)+" \u51FA\u751F\u6642\u80B2\u4F11\u958B\u59CB",40,yt+11);
+        g.fillStyle="#555"; g.font='6.5px sans-serif'; g.fillText(papaDays+"\u65E5\u9593\uFF08\uFF5E"+fd(papaEnd)+"\uFF09",60,yt+22);
+
+        // 矢印
+        g.strokeStyle="#1a1a1a"; g.lineWidth=1; g.beginPath(); g.moveTo(235,yt+10); g.lineTo(245,yt+10); g.stroke();
+
+        // 育児休業ブロック (緑)
+        rr(245,yt,350,26,3,"#dcfce7"); g.fillStyle="#1a1a1a"; g.font='7.5px sans-serif';
+        g.fillText(fd(ikujiStart)+" \uFF5E "+c1.getFullYear()+"\u5E74"+String(c1.getMonth()+1)+"\u6708"+c1.getDate()+"\u65E5",250,yt+11);
+        g.fillStyle="#555"; g.font='6.5px sans-serif'; g.fillText("\u5B50\u4F9B\u304C1\u6B73\u306B\u306A\u308B\u524D\u65E5\u307E\u3067\u4F11\u696D",270,yt+22);
+
+        // 出産日マーカー
+        g.strokeStyle="#dc2626"; g.lineWidth=1.5; g.beginPath(); g.moveTo(35,yt-10); g.lineTo(35,yt+30); g.stroke();
+        g.fillStyle="#dc2626"; g.font='bold 7.5px sans-serif'; g.fillText(fd(baseDate)+" (\u51FA\u751F\u65E5)",40,yt+42);
+        g.fillStyle="#555"; g.font='6.5px sans-serif';
+        g.fillText("\u51FA\u751F\u6642\u80B2\u4F11"+papaDays+"\u65E5",80,yt+52);
+        g.fillText("\u80B2\u5150\u4F11\u696D\u958B\u59CB",250,yt+52);
+      } else if (isEarly) {
         // 早産: no prenatal leave period
         // Red warning banner
         rr(35,yt-18,320,14,2,"#fef2f2");
@@ -675,7 +725,8 @@ function MaternityLeaveApp() {
         g.font='bold 7.5px sans-serif'; g.fillText(fd(baseDate)+" "+label,140,yt+42);
         g.fillStyle="#555"; g.font='6.5px sans-serif'; g.fillText("\u7523\u524D",85,yt+52); g.fillText("\u7523\u5F8C56\u65E5",220,yt+52); g.fillText("\u7523\u5F8C57\u65E5",360,yt+52);
       }
-      var yb=yt+70; rr(355,yb,200,15,2,"#fef9c3"); g.fillStyle="#1a1a1a"; g.font='8px sans-serif'; g.fillText("\u80B2\u5150\u4F11\u696D\u7D66\u4ED8\u91D1",400,yb+11);
+      var yb=yt+70; rr(355,yb,200,15,2,"#fef9c3"); g.fillStyle="#1a1a1a"; g.font='8px sans-serif';
+      g.fillText(isPapa ? "\u51FA\u751F\u6642\u80B2\u4F11\u7D66\u4ED8\u91D1 \uFF0B \u80B2\u4F11\u7D66\u4ED8\u91D1" : "\u80B2\u5150\u4F11\u696D\u7D66\u4ED8\u91D1", isPapa ? 370 : 400, yb+11);
       g.fillStyle="#555"; g.font='6.5px sans-serif'; g.fillText("10\u65E5\u4EE5\u5185 \u2193",355,yb+28);
       var yp=yb+40;
       g.fillStyle="#1a1a1a"; g.font='7.5px sans-serif'; g.fillText("\u30FB\u96C7\u7528\u4FDD\u967A\u80B2\u5150\u4F11\u696D\u7D66\u4ED8\u306E\u53D7\u7D66\u8CC7\u683C\u78BA\u8A8D\u624B\u7D9A\u304D\uFF08\u6BCD\u5B50\u624B\u5E33\u30FB\u901A\u5E33\u5199\u3057\u5FC5\u8981\uFF09",135,yp);
@@ -683,8 +734,15 @@ function MaternityLeaveApp() {
       g.fillStyle="#555"; g.font='6px sans-serif'; g.fillText("\u203B\u53D7\u7D66\u8CC7\u683C\u78BA\u8A8D\u624B\u7D9A\u304D\u3068\u521D\u56DE\u306E\u652F\u7D66\u7533\u8ACB\u3092\u540C\u6642\u306B\u884C\u3046\u5834\u5408",145,yp+12);
       g.fillText("\u80B2\u5150\u4F11\u696D\u958B\u59CB\u65E5\u304B\u30894\u30F6\u6708\u3092\u7D4C\u904E\u3059\u308B\u65E5\u306E\u5C5E\u3059\u308B\u6708\u672B\u65E5\u307E\u3067\uFF01",155,yp+23);
       var ye=yp+44; rr(28,ye,95,18,3,"#16a34a"); g.fillStyle="#fff"; g.font='bold 9px sans-serif'; g.fillText("\u96C7 \u7528 \u4FDD \u967A",36,ye+13);
-      rr(128,ye,135,18,3,"#dcfce7"); g.fillStyle="#1a1a1a"; g.font='8px sans-serif'; g.fillText("\u80B2 \u5150 \u4F11 \u696D \u7D66 \u4ED8 \u91D1",133,ye+13);
-      g.fillText("\u8CCC\u91D1\u6708\u984D \u00D7 \u226A\u958B\u59CB\u304B\u3089180\u65E5\u76EE\u307E\u3067 67\uFF05\u30FB181\u65E5\u76EE\u304B\u3089 50\uFF05\u226B",270,ye+13);
+      if (isPapa) {
+        rr(128,ye,180,18,3,"#dcfce7"); g.fillStyle="#1a1a1a"; g.font='7px sans-serif';
+        g.fillText("\u51FA\u751F\u6642\u80B2\u4F11\u7D66\u4ED8\u91D1\uFF0B\u80B2\u4F11\u7D66\u4ED8\u91D1",133,ye+13);
+        g.fillText("\u51FA\u751F\u6642\u80B2\u4F11\u7D66\u4ED8\u91D1\uFF1A\u8CCC\u91D1\u65E5\u984D\u00D767\uFF05",315,ye+5);
+        g.fillText("\u80B2\u4F11\u7D66\u4ED8\u91D1\uFF1A180\u65E5\u76EE\u307E\u3067 67\uFF05 \u30FB 181\u65E5\u76EE\u304B\u3089 50\uFF05",315,ye+18);
+      } else {
+        rr(128,ye,135,18,3,"#dcfce7"); g.fillStyle="#1a1a1a"; g.font='8px sans-serif'; g.fillText("\u80B2 \u5150 \u4F11 \u696D \u7D66 \u4ED8 \u91D1",133,ye+13);
+        g.fillText("\u8CCC\u91D1\u6708\u984D \u00D7 \u226A\u958B\u59CB\u304B\u3089180\u65E5\u76EE\u307E\u3067 67\uFF05\u30FB181\u65E5\u76EE\u304B\u3089 50\uFF05\u226B",270,ye+13);
+      }
       g.fillStyle="#555"; g.font='6.5px sans-serif'; g.fillText("\uFF08\u4F11\u696D\u958B\u59CB\u6642\u8CCC\u91D1\u65E5\u984D\u00D7\u652F\u7D66\u65E5\u6570\uFF09",270,ye+26);
       g.fillStyle="#555"; g.font='6.5px sans-serif';
       g.fillText("\u203B\u793E\u4F1A\u4FDD\u967A\u6599\u514D\u9664\u671F\u9593\u306F\u3001\u80B2\u5150\u4F11\u696D\u3092\u7D42\u4E86\u3059\u308B\u65E5\u306E\u7FCC\u65E5\u304C\u5C5E\u3059\u308B\u6708\u306E\u524D\u6708\u307E\u3067\u3067\u3001\u6700\u59273\u5E74\u9593\u3067\u3059\u3002",25,H-42);
@@ -788,6 +846,7 @@ function MaternityLeaveApp() {
     company: "", staff: "", name: "", insurance: "社／雇",
     dueDate: "", birthDate: "", childName: "", subsidy: "無",
     multiple: "無", ext1: "無", ext2: "無", notes: "",
+    papaLeave: "無", papaDays: "28",
   });
 
   const savePerson = () => {
@@ -799,7 +858,7 @@ function MaternityLeaveApp() {
     };
     setData(prev => [...prev, person]);
     setShowRegForm(false);
-    setNewPerson({ company: "", staff: "", name: "", insurance: "社／雇", dueDate: "", birthDate: "", childName: "", subsidy: "無", multiple: "無", ext1: "無", ext2: "無", notes: "" });
+    setNewPerson({ company: "", staff: "", name: "", insurance: "社／雇", dueDate: "", birthDate: "", childName: "", subsidy: "無", multiple: "無", ext1: "無", ext2: "無", notes: "", papaLeave: "無", papaDays: "28" });
   };
 
   // --- Password Gate ---
@@ -1552,6 +1611,7 @@ function MaternityLeaveApp() {
                           ["実出産日", formatDate(selectedPerson.birthDate)],
                           ["子の名前", selectedPerson.childName || "—"],
                           ["多胎妊娠", selectedPerson.multiple],
+                          ["パパ育休", selectedPerson.papaLeave || "無"],
                           ["育休延長(1歳6カ月)", selectedPerson.ext1],
                           ["育休延長(2歳)", selectedPerson.ext2],
                           ["職場復帰日", selectedPerson.returnDate ? formatDate(selectedPerson.returnDate) : "—"],
@@ -1664,6 +1724,21 @@ function MaternityLeaveApp() {
                                 <option value="無">無</option><option value="有">有</option>
                               </select>
                             </div>
+                            {/* Papa Leave */}
+                            <div>
+                              <label style={labelStyle}>パパ育休</label>
+                              <select value={editForm.papaLeave || "無"} onChange={e => setEditForm(p => ({ ...p, papaLeave: e.target.value }))}
+                                style={selectStyle}>
+                                <option value="無">無</option><option value="有">有</option>
+                              </select>
+                            </div>
+                            {editForm.papaLeave === "有" && (
+                            <div>
+                              <label style={labelStyle}>パパ育休日数</label>
+                              <input type="number" value={editForm.papaDays || "28"} onChange={e => setEditForm(p => ({ ...p, papaDays: e.target.value }))}
+                                style={inputStyle} min="1" max="28" />
+                            </div>
+                            )}
                             {/* Ext1 */}
                             <div>
                               <label style={labelStyle}>育休延長(1歳6カ月)</label>
@@ -2260,6 +2335,23 @@ function MaternityLeaveApp() {
                   background: COLORS.bg, color: COLORS.text, fontSize: 12,
                 }}><option value="無">無</option><option value="有">有</option></select>
               </div>
+              {/* Papa Leave */}
+              <div>
+                <label style={{ fontSize: 11, color: COLORS.textMuted, display: "block", marginBottom: 4 }}>出生時育児休業(パパ育休)</label>
+                <select value={newPerson.papaLeave || "無"} onChange={e => setNewPerson(p => ({ ...p, papaLeave: e.target.value }))} style={{
+                  width: "100%", padding: "8px 12px", borderRadius: 8, border: `1px solid ${COLORS.border}`,
+                  background: COLORS.bg, color: COLORS.text, fontSize: 12,
+                }}><option value="無">無</option><option value="有">有</option></select>
+              </div>
+              {newPerson.papaLeave === "有" && (
+              <div>
+                <label style={{ fontSize: 11, color: COLORS.textMuted, display: "block", marginBottom: 4 }}>パパ育休日数</label>
+                <input type="number" value={newPerson.papaDays || "28"} onChange={e => setNewPerson(p => ({ ...p, papaDays: e.target.value }))} style={{
+                  width: "100%", padding: "8px 12px", borderRadius: 8, border: `1px solid ${COLORS.border}`,
+                  background: COLORS.bg, color: COLORS.text, fontSize: 12, boxSizing: "border-box",
+                }} min="1" max="28" />
+              </div>
+              )}
               {/* Extensions */}
               <div>
                 <label style={{ fontSize: 11, color: COLORS.textMuted, display: "block", marginBottom: 4 }}>育休延長(1歳6カ月)</label>
