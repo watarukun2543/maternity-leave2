@@ -624,13 +624,22 @@ function MaternityLeaveApp() {
       var sy = isPapa ? 85 : (useBirth ? 85 : 97);
       g.strokeStyle="#d1d5db"; g.lineWidth=0.5; g.beginPath(); g.moveTo(25,sy); g.lineTo(W-25,sy); g.stroke();
       rr(28,sy+5,95,18,3,"#1a56db"); g.fillStyle="#fff"; g.font='bold 9px sans-serif'; g.fillText("\u793E \u4F1A \u4FDD \u967A",36,sy+18);
-      g.fillStyle="#555"; g.font='7px sans-serif'; g.fillText("\u203B\u57FA\u672C\u7684\u306B\u7523\u524D\u7523\u5F8C\u4F11\u696D \u304A\u3088\u3073 \u80B2\u5150\u4F11\u696D \u671F\u9593\u4E2D \u306F \u4E8B\u696D\u4E3B\u30FB\u672C\u4EBA\u8CA0\u62C5\u306E\u4FDD\u967A\u6599\u306F\u514D\u9664\u3055\u308C\u307E\u3059\u3002",130,sy+18);
-      var y1=sy+35; rr(28,y1,95,15,2,"#dbeafe"); g.fillStyle="#1a1a1a"; g.font='8px sans-serif'; g.fillText("\u51FA \u7523 \u4E00 \u6642 \u91D1",35,y1+11);
-      g.font='7.5px sans-serif'; g.fillText("50\u4E07\u5186\uFF08\u51FA\u7523\u8CBB\u7528\u306B\u51FA\u7523\u4E00\u6642\u91D1\u3092\u76F4\u63A5\u5145\u3066\u308B\u5236\u5EA6\uFF09\u2192\u51FA\u7523\u3055\u308C\u308B\u533B\u7642\u6A5F\u95A2\u3078\u59D4\u4EFB",130,y1+11);
-      g.fillStyle="#555"; g.font='6px sans-serif'; g.fillText("\u2191\u7523\u79D1\u533B\u7642\u88DC\u511F\u5236\u5EA6\u52A0\u5165\u75C5\u9662\u306B\u3066\u51FA\u7523\u306E\u5834\u5408\uFF08\u672A\u52A0\u5165\u75C5\u9662\u306E\u5834\u5408\u306F48.8\u4E07\u5186\uFF09",140,y1+24);
-      var y2=y1+42; rr(28,y2,95,15,2,"#dbeafe"); g.fillStyle="#1a1a1a"; g.font='8px sans-serif'; g.fillText("\u51FA \u7523 \u624B \u5F53 \u91D1",35,y2+11);
-      rr(245,y2,185,15,2,"#bfdbfe"); g.fillStyle="#1a1a1a"; g.font='8px sans-serif'; g.fillText("\u7523\u524D\u7523\u5F8C\u4F11\u696D\u30FB\u80B2\u5150\u4F11\u696D  \u53D6\u5F97\u7533\u51FA",252,y2+11);
-      g.fillStyle="#555"; g.font='6.5px sans-serif'; g.fillText("\u5065\u5EB7\u4FDD\u967A\u30FB\u539A\u751F\u5E74\u91D1\u4FDD\u967A\u6599  \u514D\u9664\u671F\u9593 \uFF1A",440,y2+10);
+      g.fillStyle="#555"; g.font='7px sans-serif';
+      if (isPapa) {
+        g.fillText("\u203B\u51FA\u751F\u6642\u80B2\u5150\u4F11\u696D \u304A\u3088\u3073 \u80B2\u5150\u4F11\u696D \u671F\u9593\u4E2D \u306F \u4E8B\u696D\u4E3B\u30FB\u672C\u4EBA\u8CA0\u62C5\u306E\u4FDD\u967A\u6599\u306F\u514D\u9664\u3055\u308C\u307E\u3059\u3002",130,sy+18);
+        // パパ育休: 出産一時金・出産手当金は不要、免除期間のみ表示
+        var y2=sy+35;
+        rr(245,y2,185,15,2,"#bfdbfe"); g.fillStyle="#1a1a1a"; g.font='8px sans-serif'; g.fillText("\u51FA\u751F\u6642\u80B2\u4F11\u30FB\u80B2\u5150\u4F11\u696D  \u53D6\u5F97\u7533\u51FA",252,y2+11);
+        g.fillStyle="#555"; g.font='6.5px sans-serif'; g.fillText("\u5065\u5EB7\u4FDD\u967A\u30FB\u539A\u751F\u5E74\u91D1\u4FDD\u967A\u6599  \u514D\u9664\u671F\u9593 \uFF1A",440,y2+10);
+      } else {
+        g.fillText("\u203B\u57FA\u672C\u7684\u306B\u7523\u524D\u7523\u5F8C\u4F11\u696D \u304A\u3088\u3073 \u80B2\u5150\u4F11\u696D \u671F\u9593\u4E2D \u306F \u4E8B\u696D\u4E3B\u30FB\u672C\u4EBA\u8CA0\u62C5\u306E\u4FDD\u967A\u6599\u306F\u514D\u9664\u3055\u308C\u307E\u3059\u3002",130,sy+18);
+        var y1=sy+35; rr(28,y1,95,15,2,"#dbeafe"); g.fillStyle="#1a1a1a"; g.font='8px sans-serif'; g.fillText("\u51FA \u7523 \u4E00 \u6642 \u91D1",35,y1+11);
+        g.font='7.5px sans-serif'; g.fillText("50\u4E07\u5186\uFF08\u51FA\u7523\u8CBB\u7528\u306B\u51FA\u7523\u4E00\u6642\u91D1\u3092\u76F4\u63A5\u5145\u3066\u308B\u5236\u5EA6\uFF09\u2192\u51FA\u7523\u3055\u308C\u308B\u533B\u7642\u6A5F\u95A2\u3078\u59D4\u4EFB",130,y1+11);
+        g.fillStyle="#555"; g.font='6px sans-serif'; g.fillText("\u2191\u7523\u79D1\u533B\u7642\u88DC\u511F\u5236\u5EA6\u52A0\u5165\u75C5\u9662\u306B\u3066\u51FA\u7523\u306E\u5834\u5408\uFF08\u672A\u52A0\u5165\u75C5\u9662\u306E\u5834\u5408\u306F48.8\u4E07\u5186\uFF09",140,y1+24);
+        var y2=y1+42; rr(28,y2,95,15,2,"#dbeafe"); g.fillStyle="#1a1a1a"; g.font='8px sans-serif'; g.fillText("\u51FA \u7523 \u624B \u5F53 \u91D1",35,y2+11);
+        rr(245,y2,185,15,2,"#bfdbfe"); g.fillStyle="#1a1a1a"; g.font='8px sans-serif'; g.fillText("\u7523\u524D\u7523\u5F8C\u4F11\u696D\u30FB\u80B2\u5150\u4F11\u696D  \u53D6\u5F97\u7533\u51FA",252,y2+11);
+        g.fillStyle="#555"; g.font='6.5px sans-serif'; g.fillText("\u5065\u5EB7\u4FDD\u967A\u30FB\u539A\u751F\u5E74\u91D1\u4FDD\u967A\u6599  \u514D\u9664\u671F\u9593 \uFF1A",440,y2+10);
+      }
       var exemptStart;
       if (isPapa) {
         exemptStart = baseDate; // パパ育休: 出生日の月から
@@ -647,9 +656,12 @@ function MaternityLeaveApp() {
       else { /* そのまま前月 */ }
       var exemptEndStr = exemptEndYear + "\u5E74 " + exemptEndMonth + "\u6708";
       g.fillStyle="#dc2626"; g.font='bold 7px sans-serif'; g.fillText(fy(exemptStart)+" \uFF5E "+exemptEndStr,600,y2+10);
-      g.fillStyle="#555"; g.font='7px sans-serif'; g.fillText("\u2193 \u5BFE\u8C61\u671F\u9593\u3001\u6A19\u6E96\u5831\u916C\u65E5\u984D\u306E\uFF12\uFF0F\uFF13\u76F8\u5F53\u984D",135,y2+26);
-      var submitTo = person.company.includes("\u30C6\u30AF\u30CE\u30C7\u30B8\u30BF\u30EB") ? "TJK" : "\u5354\u4F1A\u3051\u3093\u307D";
-      g.fillText("\u7523\u5F8C\u4F11\u6687\u6E80\u4E86\u5F8C\u306B"+submitTo+"\u3078\u63D0\u51FA",135,y2+37);
+      g.fillStyle="#555"; g.font='7px sans-serif';
+      if (!isPapa) {
+        g.fillText("\u2193 \u5BFE\u8C61\u671F\u9593\u3001\u6A19\u6E96\u5831\u916C\u65E5\u984D\u306E\uFF12\uFF0F\uFF13\u76F8\u5F53\u984D",135,y2+26);
+        var submitTo = person.company.includes("\u30C6\u30AF\u30CE\u30C7\u30B8\u30BF\u30EB") ? "TJK" : "\u5354\u4F1A\u3051\u3093\u307D";
+        g.fillText("\u7523\u5F8C\u4F11\u6687\u6E80\u4E86\u5F8C\u306B"+submitTo+"\u3078\u63D0\u51FA",135,y2+37);
+      }
       // Early birth detection: birth before prenatal start date
       var isEarly = useBirth && hasDue && (baseDate < ps);
       var isPapa = person.papaLeave === "\u6709";
