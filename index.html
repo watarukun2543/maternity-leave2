@@ -627,18 +627,31 @@ function MaternityLeaveApp() {
       g.fillStyle="#555"; g.font='7px sans-serif';
       if (isPapa) {
         g.fillText("\u203B\u51FA\u751F\u6642\u80B2\u5150\u4F11\u696D \u304A\u3088\u3073 \u80B2\u5150\u4F11\u696D \u671F\u9593\u4E2D \u306F \u4E8B\u696D\u4E3B\u30FB\u672C\u4EBA\u8CA0\u62C5\u306E\u4FDD\u967A\u6599\u306F\u514D\u9664\u3055\u308C\u307E\u3059\u3002",130,sy+18);
-        // パパ育休: 出産一時金・出産手当金は不要、免除期間のみ表示
-        var y2=sy+35;
-        rr(245,y2,185,15,2,"#bfdbfe"); g.fillStyle="#1a1a1a"; g.font='8px sans-serif'; g.fillText("\u51FA\u751F\u6642\u80B2\u4F11\u30FB\u80B2\u5150\u4F11\u696D  \u53D6\u5F97\u7533\u51FA",252,y2+11);
-        g.fillStyle="#555"; g.font='6.5px sans-serif'; g.fillText("\u5065\u5EB7\u4FDD\u967A\u30FB\u539A\u751F\u5E74\u91D1\u4FDD\u967A\u6599  \u514D\u9664\u671F\u9593 \uFF1A",440,y2+10);
-      } else {
-        g.fillText("\u203B\u57FA\u672C\u7684\u306B\u7523\u524D\u7523\u5F8C\u4F11\u696D \u304A\u3088\u3073 \u80B2\u5150\u4F11\u696D \u671F\u9593\u4E2D \u306F \u4E8B\u696D\u4E3B\u30FB\u672C\u4EBA\u8CA0\u62C5\u306E\u4FDD\u967A\u6599\u306F\u514D\u9664\u3055\u308C\u307E\u3059\u3002",130,sy+18);
+        // パパ育休: 出産一時金は表示、出産手当金は非表示
         var y1=sy+35; rr(28,y1,95,15,2,"#dbeafe"); g.fillStyle="#1a1a1a"; g.font='8px sans-serif'; g.fillText("\u51FA \u7523 \u4E00 \u6642 \u91D1",35,y1+11);
         g.font='7.5px sans-serif'; g.fillText("50\u4E07\u5186\uFF08\u51FA\u7523\u8CBB\u7528\u306B\u51FA\u7523\u4E00\u6642\u91D1\u3092\u76F4\u63A5\u5145\u3066\u308B\u5236\u5EA6\uFF09\u2192\u51FA\u7523\u3055\u308C\u308B\u533B\u7642\u6A5F\u95A2\u3078\u59D4\u4EFB",130,y1+11);
+        g.fillStyle="#dc2626"; g.font='6.5px sans-serif'; g.fillText("\u2191\u5965\u69D8\u304C\u6276\u990A\u5BB6\u65CF\u3067\u3042\u308C\u3070",28,y1+24);
         g.fillStyle="#555"; g.font='6px sans-serif'; g.fillText("\u2191\u7523\u79D1\u533B\u7642\u88DC\u511F\u5236\u5EA6\u52A0\u5165\u75C5\u9662\u306B\u3066\u51FA\u7523\u306E\u5834\u5408\uFF08\u672A\u52A0\u5165\u75C5\u9662\u306E\u5834\u5408\u306F48.8\u4E07\u5186\uFF09",140,y1+24);
-        var y2=y1+42; rr(28,y2,95,15,2,"#dbeafe"); g.fillStyle="#1a1a1a"; g.font='8px sans-serif'; g.fillText("\u51FA \u7523 \u624B \u5F53 \u91D1",35,y2+11);
-        rr(245,y2,185,15,2,"#bfdbfe"); g.fillStyle="#1a1a1a"; g.font='8px sans-serif'; g.fillText("\u7523\u524D\u7523\u5F8C\u4F11\u696D\u30FB\u80B2\u5150\u4F11\u696D  \u53D6\u5F97\u7533\u51FA",252,y2+11);
-        g.fillStyle="#555"; g.font='6.5px sans-serif'; g.fillText("\u5065\u5EB7\u4FDD\u967A\u30FB\u539A\u751F\u5E74\u91D1\u4FDD\u967A\u6599  \u514D\u9664\u671F\u9593 \uFF1A",440,y2+10);
+        var y2=y1+42;
+        rr(245,y2,185,15,2,"#bfdbfe"); g.fillStyle="#1a1a1a"; g.font='7px sans-serif'; g.fillText("\u51FA\u751F\u6642\u80B2\u5150\u4F11\u696D\u30FB\u80B2\u5150\u4F11\u696D \u53D6\u5F97\u7533\u51FA",252,y2+11);
+        g.fillStyle="#1a56db"; g.font='bold 6.5px sans-serif'; g.fillText("\u2191 \u793E\u52B4\u58EB\u4E8B\u52D9\u6240\u5BFE\u5FDC",252,y2+26);
+        g.fillStyle="#555"; g.font='6.5px sans-serif'; g.fillText("\u5065\u5EB7\u4FDD\u967A\u30FB\u539A\u751F\u5E74\u91D1\u4FDD\u967A\u6599  \u514D\u9664\u671F\u9593 :",440,y2+10);
+      } else {
+        g.fillText("\u203B\u57FA\u672C\u7684\u306B\u7523\u524D\u7523\u5F8C\u4F11\u696D \u304A\u3088\u3073 \u80B2\u5150\u4F11\u696D \u671F\u9593\u4E2D \u306F \u4E8B\u696D\u4E3B\u30FB\u672C\u4EBA\u8CA0\u62C5\u306E\u4FDD\u967A\u6599\u306F\u514D\u9664\u3055\u308C\u307E\u3059\u3002",130,sy+18);
+        // 出産一時金
+        var y1=sy+32; rr(28,y1,95,15,2,"#dbeafe"); g.fillStyle="#1a1a1a"; g.font='8px sans-serif'; g.fillText("\u51FA \u7523 \u4E00 \u6642 \u91D1",35,y1+11);
+        g.font='7.5px sans-serif'; g.fillText("50\u4E07\u5186\uFF08\u51FA\u7523\u8CBB\u7528\u306B\u51FA\u7523\u4E00\u6642\u91D1\u3092\u76F4\u63A5\u5145\u3066\u308B\u5236\u5EA6\uFF09\u2192\u51FA\u7523\u3055\u308C\u308B\u533B\u7642\u6A5F\u95A2\u3078\u59D4\u4EFB",130,y1+11);
+        g.fillStyle="#555"; g.font='6px sans-serif'; g.fillText("\u2191\u7523\u79D1\u533B\u7642\u88DC\u511F\u5236\u5EA6\u52A0\u5165\u75C5\u9662\u306B\u3066\u51FA\u7523\u306E\u5834\u5408\uFF08\u672A\u52A0\u5165\u75C5\u9662\u306E\u5834\u5408\u306F48.8\u4E07\u5186\uFF09",140,y1+23);
+        // 出産手当金
+        var y2=y1+32; rr(28,y2,95,15,2,"#dbeafe"); g.fillStyle="#1a1a1a"; g.font='8px sans-serif'; g.fillText("\u51FA \u7523 \u624B \u5F53 \u91D1",35,y2+11);
+        g.fillStyle="#555"; g.font='7px sans-serif'; g.fillText("\u2193 \u5BFE\u8C61\u671F\u9593\u3001\u6A19\u6E96\u5831\u916C\u65E5\u984D\u306E 2/3 \u76F8\u5F53\u984D",130,y2+11);
+        var submitTo2 = person.company.includes("\u30C6\u30AF\u30CE\u30C7\u30B8\u30BF\u30EB") ? "TJK" : "\u5354\u4F1A\u3051\u3093\u307D";
+        g.fillText("\u7523\u5F8C\u4F11\u6687\u6E80\u4E86\u5F8C\u306B"+submitTo2+"\u3078\u63D0\u51FA",130,y2+23);
+        // 取得申出 + 社労士事務所対応 + 免除期間（右側にまとめて配置）
+        var y3=y2+32;
+        rr(28,y3,185,15,2,"#bfdbfe"); g.fillStyle="#1a1a1a"; g.font='7.5px sans-serif'; g.fillText("\u7523\u524D\u7523\u5F8C\u4F11\u696D\u30FB\u80B2\u5150\u4F11\u696D \u53D6\u5F97\u7533\u51FA",33,y3+11);
+        g.fillStyle="#1a56db"; g.font='bold 6.5px sans-serif'; g.fillText("\u2190 \u793E\u52B4\u58EB\u4E8B\u52D9\u6240\u5BFE\u5FDC",220,y3+11);
+        g.fillStyle="#555"; g.font='6.5px sans-serif'; g.fillText("\u5065\u5EB7\u4FDD\u967A\u30FB\u539A\u751F\u5E74\u91D1\u4FDD\u967A\u6599  \u514D\u9664\u671F\u9593 :",440,y3+10);
       }
       var exemptStart;
       if (isPapa) {
@@ -655,113 +668,359 @@ function MaternityLeaveApp() {
       if (exemptEndMonth === 0) { exemptEndMonth = 12; exemptEndYear--; } // 1月→前年12月
       else { /* そのまま前月 */ }
       var exemptEndStr = exemptEndYear + "\u5E74 " + exemptEndMonth + "\u6708";
-      g.fillStyle="#dc2626"; g.font='bold 7px sans-serif'; g.fillText(fy(exemptStart)+" \uFF5E "+exemptEndStr,600,y2+10);
+      g.fillStyle="#dc2626"; g.font='bold 7px sans-serif'; g.fillText(fy(exemptStart)+" \uFF5E "+exemptEndStr,600, isPapa ? y2+10 : y3+10);
       g.fillStyle="#555"; g.font='7px sans-serif';
       if (!isPapa) {
-        g.fillText("\u2193 \u5BFE\u8C61\u671F\u9593\u3001\u6A19\u6E96\u5831\u916C\u65E5\u984D\u306E\uFF12\uFF0F\uFF13\u76F8\u5F53\u984D",135,y2+26);
-        var submitTo = person.company.includes("\u30C6\u30AF\u30CE\u30C7\u30B8\u30BF\u30EB") ? "TJK" : "\u5354\u4F1A\u3051\u3093\u307D";
-        g.fillText("\u7523\u5F8C\u4F11\u6687\u6E80\u4E86\u5F8C\u306B"+submitTo+"\u3078\u63D0\u51FA",135,y2+37);
       }
       // Early birth detection: birth before prenatal start date
       var isEarly = useBirth && hasDue && (baseDate < ps);
       var isPapa = person.papaLeave === "\u6709";
       var papaDays = parseInt(person.papaDays) || 28;
-      var yt=y2+62;
+      var yt= isPapa ? y2+62 : (typeof y3 !== 'undefined' ? y3+38 : y2+62);
 
       if (isPapa) {
-        // === パパ育休フローチャート ===
-
-        // 出産手当金→育休免除申請に変更
-        g.fillStyle="#555"; g.font='7px sans-serif';
-        g.fillText("\u2193 \u80B2\u5150\u4F11\u696D\u53D6\u5F97\u7533\u51FA\u66F8\u3092\u4E8B\u524D\u306B\u63D0\u51FA",135,y2+26);
-        g.fillText("",135,y2+37);
-
-        // 出生時育児休業ブロック (水色)
+        // ========================================
+        // === パパ育休 フローチャート（v4） ===
+        // ========================================
         var papaEnd = addD(baseDate, papaDays - 1);
         var ikujiStart = addD(baseDate, papaDays);
-        rr(35,yt,200,26,3,"#dbeafe"); g.fillStyle="#1a1a1a"; g.font='7.5px sans-serif';
-        g.fillText(fd(baseDate)+" \u51FA\u751F\u6642\u80B2\u4F11\u958B\u59CB",40,yt+11);
-        g.fillStyle="#555"; g.font='6.5px sans-serif'; g.fillText(papaDays+"\u65E5\u9593\uFF08\uFF5E"+fd(papaEnd)+"\uFF09",60,yt+22);
+        var yt = y2 + 42;
+
+        // ======= タイムライン =======
+        // 左サイドバー（青）
+        rr(30,yt-2,5,34,2,"#1a56db");
+        // 出生時育児休業ブロック（青系）
+        rr(40,yt,215,30,4,"#dbeafe");
+        g.strokeStyle="#93c5fd"; g.lineWidth=0.8; rr(40,yt,215,30,4); g.stroke();
+        g.fillStyle="#1a56db"; g.font='bold 8.5px sans-serif';
+        g.fillText("\u51FA\u751F\u6642\u80B2\u5150\u4F11\u696D",50,yt+12);
+        g.fillStyle="#1a1a1a"; g.font='7px sans-serif';
+        g.fillText(fd(baseDate)+" ~ "+fd(papaEnd),50,yt+24);
+        rr(195,yt+4,55,11,6,"#1a56db");
+        g.fillStyle="#fff"; g.font='bold 6.5px sans-serif'; g.fillText(papaDays+"\u65E5\u9593",204,yt+13);
+
+        // 矢印（太め）
+        g.strokeStyle="#64748b"; g.lineWidth=1.5;
+        g.beginPath(); g.moveTo(258,yt+15); g.lineTo(278,yt+15); g.stroke();
+        g.beginPath(); g.moveTo(273,yt+10); g.lineTo(278,yt+15); g.lineTo(273,yt+20); g.stroke();
+
+        // 右サイドバー（緑）
+        rr(283,yt-2,5,34,2,"#16a34a");
+        // 育児休業ブロック（緑系）
+        rr(293,yt,315,30,4,"#dcfce7");
+        g.strokeStyle="#86efac"; g.lineWidth=0.8; rr(293,yt,315,30,4); g.stroke();
+        g.fillStyle="#16a34a"; g.font='bold 8.5px sans-serif';
+        g.fillText("\u80B2\u5150\u4F11\u696D",303,yt+12);
+        g.fillStyle="#1a1a1a"; g.font='7px sans-serif';
+        g.fillText(fd(ikujiStart)+" ~ "+c1.getFullYear()+"\u5E74"+String(c1.getMonth()+1)+"\u6708"+c1.getDate()+"\u65E5",303,yt+24);
+        rr(515,yt+4,88,11,6,"#16a34a");
+        g.fillStyle="#fff"; g.font='bold 6px sans-serif'; g.fillText("\u5B50\u304C1\u6B73\u306E\u524D\u65E5\u307E\u3067",520,yt+13);
+
+        // 出生日マーカー
+        g.strokeStyle="#dc2626"; g.lineWidth=2;
+        g.beginPath(); g.moveTo(40,yt-10); g.lineTo(40,yt+35); g.stroke();
+        g.fillStyle="#1a1a1a"; g.font='bold 8px sans-serif';
+        g.fillText("\u25BC "+fd(baseDate)+" \u51FA\u751F\u65E5",48,yt+48);
+
+        // ======= 給付金ボックス（色で対応関係を表現） =======
+        var yf = yt + 58;
+
+        // 点線コネクタ（タイムライン→給付金）
+        g.setLineDash([2,2]); g.strokeStyle="#93c5fd"; g.lineWidth=0.8;
+        g.beginPath(); g.moveTo(148,yt+30); g.lineTo(148,yf); g.stroke();
+        g.strokeStyle="#86efac";
+        g.beginPath(); g.moveTo(450,yt+30); g.lineTo(450,yf); g.stroke();
+        g.setLineDash([]);
+
+        // 出生時育児休業給付金（青系 = 出生時育休と同色系）
+        rr(40,yf,215,18,3,"#dbeafe");
+        g.strokeStyle="#93c5fd"; g.lineWidth=0.8; rr(40,yf,215,18,3); g.stroke();
+        g.fillStyle="#1a56db"; g.font='bold 7.5px sans-serif';
+        g.fillText("\u51FA\u751F\u6642\u80B2\u5150\u4F11\u696D\u7D66\u4ED8\u91D1",52,yf+13);
+        // 振込目安
+        rr(42,yf+20,210,12,2,"#eff6ff");
+        g.fillStyle="#1a56db"; g.font='bold 6.5px sans-serif';
+        g.fillText("\u00A5 \u632F\u8FBC\u76EE\u5B89 : \u51FA\u7523\u5F8C \u7D04 2~3\u30F6\u6708\u5F8C",48,yf+29);
+
+        // 育児休業給付金（緑系 = 育児休業と同色系）
+        rr(293,yf,215,18,3,"#dcfce7");
+        g.strokeStyle="#86efac"; g.lineWidth=0.8; rr(293,yf,215,18,3); g.stroke();
+        g.fillStyle="#16a34a"; g.font='bold 7.5px sans-serif';
+        g.fillText("\u80B2\u5150\u4F11\u696D\u7D66\u4ED8\u91D1",328,yf+13);
+        // 振込目安
+        rr(295,yf+20,210,12,2,"#f0fdf4");
+        g.fillStyle="#16a34a"; g.font='bold 6.5px sans-serif';
+        g.fillText("\u00A5 \u521D\u56DE\u632F\u8FBC : \u80B2\u4F11\u958B\u59CB\u304B\u3089\u7D04 4~5\u30F6\u6708\u5F8C",301,yf+29);
+
+        // ======= 手続きフロー =======
+        var yh = yf + 38;
+        // 背景帯
+        rr(35,yh,580,46,4,"#f8fafc");
+        g.strokeStyle="#e2e8f0"; g.lineWidth=0.5; rr(35,yh,580,46,4); g.stroke();
+
+        // 受給資格確認手続き（強調）
+        g.fillStyle="#1a1a1a"; g.font='bold 10px sans-serif';
+        g.fillText("\u53D7\u7D66\u8CC7\u683C\u78BA\u8A8D\u624B\u7D9A\u304D",220,yh+12);
+        g.fillStyle="#dc2626"; g.font='bold 9px sans-serif';
+        g.fillText("(\u6BCD\u5B50\u624B\u5E33\u30FB\u901A\u5E33\u5199\u3057\u30FB\u80B2\u5150\u4F11\u696D\u7533\u51FA\u66F8 \u5FC5\u8981)",370,yh+12);
+
+        g.fillStyle="#1a56db"; g.font='bold 9px sans-serif';
+        g.fillText("\u4EE5\u5F8C\u30012\u30F6\u6708\u6BCE\u306B\u652F\u7D66\u7533\u8ACB\u624B\u7D9A\u304D",220,yh+28);
+        g.fillStyle="#94a3b8"; g.font='6px sans-serif';
+        g.fillText("* \u53D7\u7D66\u8CC7\u683C\u78BA\u8A8D\u3068\u521D\u56DE\u652F\u7D66\u7533\u8ACB\u3092\u540C\u6642\u306B\u884C\u3046\u5834\u5408\u3001\u80B2\u4F11\u958B\u59CB\u65E5\u304B\u30894\u30F6\u6708\u3092\u7D4C\u904E\u3059\u308B\u65E5\u306E\u5C5E\u3059\u308B\u6708\u672B\u65E5\u307E\u3067",220,yh+40);
+
+        // ======= 2段構成：左=出生後休業支援給付金 / 右=雇用保険 =======
+        var yb = yh + 56;
+
+        // --- 左：出生後休業支援給付金 ---
+        rr(28,yb,400,138,5,"#fff7ed");
+        g.strokeStyle="#fdba74"; g.lineWidth=1; rr(28,yb,400,138,5); g.stroke();
+        rr(35,yb+6,230,16,3,"#f97316");
+        g.fillStyle="#fff"; g.font='bold 8.5px sans-serif';
+        g.fillText("\u51FA\u751F\u5F8C\u4F11\u696D\u652F\u63F4\u7D66\u4ED8\u91D1 (R7.4~)",42,yb+17);
+
+        g.fillStyle="#1a1a1a"; g.font='bold 8.5px sans-serif';
+        g.fillText("\u652F\u7D66\u984D : \u8CC3\u91D1\u65E5\u984D x 13%",42,yb+38);
+        g.fillStyle="#dc2626"; g.font='bold 9px sans-serif';
+        g.fillText("-> 67% + 13% = \u5B9F\u8CEA 80%",230,yb+38);
+        rr(365,yb+28,55,14,6,"#dc2626");
+        g.fillStyle="#fff"; g.font='bold 7px sans-serif'; g.fillText("\u6700\u592728\u65E5",372,yb+39);
+
+        g.fillStyle="#1a1a1a"; g.font='bold 7.5px sans-serif';
+        g.fillText("[\u652F\u7D66\u8981\u4EF6]",42,yb+56);
+        g.fillStyle="#333"; g.font='7px sans-serif';
+        g.fillText("(1) \u5B50\u306E\u51FA\u751F\u5F8C8\u9031\u9593\u4EE5\u5185\u306B14\u65E5\u4EE5\u4E0A\u306E\u80B2\u5150\u4F11\u696D\u3092\u53D6\u5F97",50,yb+70);
+        g.fillText("(2) \u914D\u5076\u8005\u304C\u51FA\u7523\u65E5\u4EE5\u964D\u306B14\u65E5\u4EE5\u4E0A\u306E\u80B2\u4F11\u7B49\u3092\u53D6\u5F97",50,yb+83);
+        g.fillStyle="#64748b"; g.font='6.5px sans-serif';
+        g.fillText("   (\u7523\u524D\u7523\u5F8C\u4F11\u696D / \u80B2\u5150\u4F11\u696D / \u51FA\u751F\u6642\u80B2\u5150\u4F11\u696D \u306E\u3044\u305A\u308C\u304B)",50,yb+95);
+        g.fillStyle="#1a56db"; g.font='bold 6.5px sans-serif';
+        g.fillText("* \u914D\u5076\u8005\u304C\u5C02\u696D\u4E3B\u5A66(\u592B)\u3067\u3082\u5BFE\u8C61 (R7.4\u6539\u6B63)",50,yb+108);
+        // 必要書類
+        g.fillStyle="#dc2626"; g.font='bold 7px sans-serif';
+        g.fillText("[\u5FC5\u8981\u66F8\u985E] \u914D\u5076\u8005\u306E\u88AB\u4FDD\u967A\u8005\u756A\u53F7 / \u51FA\u7523\u4E88\u5B9A\u65E5\u306E\u5206\u304B\u308B\u6BCD\u5B50\u624B\u5E33\u306E\u30DA\u30FC\u30B8",42,yb+124);
+
+        // --- 右：雇用保険（給付率まとめ） ---
+        rr(438,yb,195,138,5,"#f0fdf4");
+        g.strokeStyle="#86efac"; g.lineWidth=1; rr(438,yb,195,138,5); g.stroke();
+        rr(445,yb+6,180,16,3,"#16a34a");
+        g.fillStyle="#fff"; g.font='bold 8px sans-serif';
+        g.fillText("\u96C7\u7528\u4FDD\u967A \u7D66\u4ED8\u7387\u307E\u3068\u3081",465,yb+17);
+
+        // 出生時育児休業給付金（青）
+        rr(448,yb+30,8,8,2,"#1a56db");
+        g.fillStyle="#1a1a1a"; g.font='6.5px sans-serif';
+        g.fillText("\u51FA\u751F\u6642\u80B2\u5150\u4F11\u696D\u7D66\u4ED8\u91D1",462,yb+38);
+        g.fillStyle="#1a56db"; g.font='bold 7.5px sans-serif';
+        g.fillText("\u8CC3\u91D1\u65E5\u984D x 67%",462,yb+50);
+
+        // 育児休業給付金（緑）
+        rr(448,yb+58,8,8,2,"#16a34a");
+        g.fillStyle="#1a1a1a"; g.font='6.5px sans-serif';
+        g.fillText("\u80B2\u5150\u4F11\u696D\u7D66\u4ED8\u91D1",462,yb+66);
+        g.fillStyle="#16a34a"; g.font='bold 7.5px sans-serif';
+        g.fillText("180\u65E5\u307E\u3067 : 67%",462,yb+78);
+        g.fillText("181\u65E5~    : 50%",462,yb+90);
+
+        g.fillStyle="#94a3b8"; g.font='6px sans-serif';
+        g.fillText("(\u4F11\u696D\u958B\u59CB\u6642\u8CC3\u91D1\u65E5\u984D x \u652F\u7D66\u65E5\u6570)",448,yb+105);
+
+        // ======= フッター =======
+        g.fillStyle="#94a3b8"; g.font='6px sans-serif';
+        g.fillText("* \u793E\u4F1A\u4FDD\u967A\u6599\u514D\u9664\u671F\u9593\u306F\u3001\u80B2\u5150\u4F11\u696D\u3092\u7D42\u4E86\u3059\u308B\u65E5\u306E\u7FCC\u65E5\u304C\u5C5E\u3059\u308B\u6708\u306E\u524D\u6708\u307E\u3067 (\u6700\u59273\u5E74\u9593)    * \u80B2\u5150\u4F11\u696D\u7D66\u4ED8\u91D1\u306F\u6761\u4EF6\u306B\u3088\u308A2\u6B73\u307E\u3067\u5EF6\u9577\u53EF\u80FD (\u4FDD\u80B2\u6240\u4E0D\u627F\u8AFE\u7B49\u30FB\u6DFB\u4ED8\u66F8\u985E\u5FC5\u8981)",25,H-13);
+        g.fillStyle="#1a56db"; g.fillRect(0,H-8,W,2);
+
+        setFlowchartPreview({ name: person.name + " (\u30D1\u30D1\u80B2\u4F11)", dataUrl: cv.toDataURL("image/png"), canvasW: W, canvasH: H });
+      } else if (isEarly) {
+        // ======= 早産フローチャート（改良版） =======
+        rr(35,yt-18,350,14,2,"#fef2f2");
+        g.fillStyle="#dc2626"; g.font='bold 7px sans-serif';
+        g.fillText("* \u65E9\u7523\u306E\u305F\u3081\u7523\u524D\u4F11\u6687\u306A\u3057 (\u4E88\u5B9A\u65E5: "+fd(due)+")",40,yt-9);
+
+        // 産後休暇（ピンク系）
+        rr(30,yt-2,5,30,2,"#ec4899");
+        rr(40,yt,185,26,4,"#fce7f3");
+        g.strokeStyle="#f9a8d4"; g.lineWidth=0.8; rr(40,yt,185,26,4); g.stroke();
+        g.fillStyle="#db2777"; g.font='bold 8px sans-serif';
+        g.fillText("\u7523\u5F8C\u4F11\u6687",50,yt+11);
+        g.fillStyle="#1a1a1a"; g.font='7px sans-serif';
+        g.fillText(fd(baseDate)+" \u51FA\u7523 ~ "+fd(pe),50,yt+22);
 
         // 矢印
-        g.strokeStyle="#1a1a1a"; g.lineWidth=1; g.beginPath(); g.moveTo(235,yt+10); g.lineTo(245,yt+10); g.stroke();
+        g.strokeStyle="#64748b"; g.lineWidth=1.2;
+        g.beginPath(); g.moveTo(228,yt+13); g.lineTo(248,yt+13); g.stroke();
+        g.beginPath(); g.moveTo(243,yt+8); g.lineTo(248,yt+13); g.lineTo(243,yt+18); g.stroke();
 
-        // 育児休業ブロック (緑)
-        rr(245,yt,350,26,3,"#dcfce7"); g.fillStyle="#1a1a1a"; g.font='7.5px sans-serif';
-        g.fillText(fd(ikujiStart)+" \uFF5E "+c1.getFullYear()+"\u5E74"+String(c1.getMonth()+1)+"\u6708"+c1.getDate()+"\u65E5",250,yt+11);
-        g.fillStyle="#555"; g.font='6.5px sans-serif'; g.fillText("\u5B50\u4F9B\u304C1\u6B73\u306B\u306A\u308B\u524D\u65E5\u307E\u3067\u4F11\u696D",270,yt+22);
+        // 育児休業（緑系）
+        rr(253,yt-2,5,30,2,"#16a34a");
+        rr(263,yt,345,26,4,"#dcfce7");
+        g.strokeStyle="#86efac"; g.lineWidth=0.8; rr(263,yt,345,26,4); g.stroke();
+        g.fillStyle="#16a34a"; g.font='bold 8px sans-serif';
+        g.fillText("\u80B2\u5150\u4F11\u696D",273,yt+11);
+        g.fillStyle="#1a1a1a"; g.font='7px sans-serif';
+        g.fillText(fd(cs)+" ~ "+c1.getFullYear()+"\u5E74"+String(c1.getMonth()+1)+"\u6708"+c1.getDate()+"\u65E5",273,yt+22);
+        rr(520,yt+4,80,11,6,"#16a34a");
+        g.fillStyle="#fff"; g.font='bold 6px sans-serif'; g.fillText("\u5B50\u304C1\u6B73\u306E\u524D\u65E5\u307E\u3067",525,yt+13);
 
         // 出産日マーカー
-        g.strokeStyle="#dc2626"; g.lineWidth=1.5; g.beginPath(); g.moveTo(35,yt-10); g.lineTo(35,yt+30); g.stroke();
-        g.fillStyle="#dc2626"; g.font='bold 7.5px sans-serif'; g.fillText(fd(baseDate)+" (\u51FA\u751F\u65E5)",40,yt+42);
-        g.fillStyle="#555"; g.font='6.5px sans-serif';
-        g.fillText("\u51FA\u751F\u6642\u80B2\u4F11"+papaDays+"\u65E5",80,yt+52);
-        g.fillText("\u80B2\u5150\u4F11\u696D\u958B\u59CB",250,yt+52);
-      } else if (isEarly) {
-        // 早産: no prenatal leave period
-        // Red warning banner
-        rr(35,yt-18,320,14,2,"#fef2f2");
-        g.fillStyle="#dc2626"; g.font='bold 7px sans-serif';
-        g.fillText("\u203B \u65E9\u7523\u306E\u305F\u3081\u7523\u524D\u4F11\u6687\u306A\u3057\uFF08\u4E88\u5B9A\u65E5: "+fd(due)+"\uFF09",40,yt-9);
-        // No prenatal box, just postpartum + childcare
-        rr(35,yt,180,26,3,"#fce7f3"); g.fillStyle="#1a1a1a"; g.font='7.5px sans-serif';
-        g.fillText(fd(baseDate)+" \u51FA\u7523 \u2192 "+fd(pe)+"\u307E\u3067\u7523\u5F8C\u4F11\u6687",40,yt+11);
-        g.fillStyle="#555"; g.font='6.5px sans-serif'; g.fillText("\u7523\u5F8C 56\u65E5",65,yt+22);
-        // Childcare box
-        rr(225,yt,250,26,3,"#dcfce7"); g.fillStyle="#1a1a1a"; g.font='7.5px sans-serif';
-        g.fillText(fd(cs)+" \uFF5E "+c1.getFullYear()+"\u5E74"+String(c1.getMonth()+1)+"\u6708"+c1.getDate()+"\u65E5",230,yt+11);
-        g.fillStyle="#555"; g.font='6.5px sans-serif'; g.fillText("\u5B50\u4F9B\u304C1\u6B73\u306B\u306A\u308B\u524D\u65E5\u307E\u3067\u4F11\u696D",250,yt+22);
-        // Arrow
-        g.strokeStyle="#1a1a1a"; g.lineWidth=1; g.beginPath(); g.moveTo(215,yt+10); g.lineTo(225,yt+10); g.stroke();
-        // Birth marker at left edge
-        g.strokeStyle="#dc2626"; g.lineWidth=1.5; g.beginPath(); g.moveTo(35,yt-4); g.lineTo(35,yt+30); g.stroke();
-        g.fillStyle="#dc2626"; g.font='bold 7.5px sans-serif'; g.fillText(fd(baseDate)+" "+label,40,yt+42);
-        g.fillStyle="#555"; g.font='6.5px sans-serif';
-        g.fillText("\u7523\u524D\u4F11\u6687\u306A\u3057",65,yt+52);
-        g.fillText("\u7523\u5F8C56\u65E5",200,yt+52);
-        g.fillText("\u7523\u5F8C57\u65E5",230,yt+52);
+        g.strokeStyle="#dc2626"; g.lineWidth=2;
+        g.beginPath(); g.moveTo(40,yt-4); g.lineTo(40,yt+31); g.stroke();
+        g.fillStyle="#1a1a1a"; g.font='bold 7.5px sans-serif';
+        g.fillText("\u25BC "+fd(baseDate)+" "+label,48,yt+42);
       } else {
-        // Normal: prenatal + postpartum + childcare
-        rr(35,yt,160,26,3,"#fce7f3"); g.fillStyle="#1a1a1a"; g.font='7.5px sans-serif'; g.fillText(fd(ps)+" \u7523\u524D\u4F11\u6687\u958B\u59CB",40,yt+11);
-        g.fillStyle="#555"; g.font='6.5px sans-serif'; g.fillText("6\u9031\u9593",85,yt+22);
-        rr(200,yt,145,26,3,"#fce7f3"); g.fillStyle="#1a1a1a"; g.font='7.5px sans-serif'; g.fillText(fd(pe)+"\u307E\u3067\u7523\u5F8C\u4F11\u6687",205,yt+11);
-        g.fillStyle="#555"; g.font='6.5px sans-serif'; g.fillText("8\u9031\u9593",245,yt+22);
-        rr(355,yt,250,26,3,"#dcfce7"); g.fillStyle="#1a1a1a"; g.font='7.5px sans-serif'; g.fillText(fd(cs)+" \uFF5E "+c1.getFullYear()+"\u5E74"+String(c1.getMonth()+1)+"\u6708"+c1.getDate()+"\u65E5",360,yt+11);
-        g.fillStyle="#555"; g.font='6.5px sans-serif'; g.fillText("\u5B50\u4F9B\u304C1\u6B73\u306B\u306A\u308B\u524D\u65E5\u307E\u3067\u4F11\u696D",385,yt+22);
-        g.strokeStyle="#1a1a1a"; g.lineWidth=1; g.beginPath(); g.moveTo(195,yt+10); g.lineTo(200,yt+10); g.stroke();
-        g.beginPath(); g.moveTo(345,yt+10); g.lineTo(355,yt+10); g.stroke();
-        // Birth/Due marker
-        g.strokeStyle = useBirth ? "#dc2626" : "#d97706"; g.lineWidth=1.5;
-        g.beginPath(); g.moveTo(197,yt-10); g.lineTo(197,yt+30); g.stroke();
-        g.fillStyle = useBirth ? "#dc2626" : "#d97706";
-        g.font='bold 7.5px sans-serif'; g.fillText(fd(baseDate)+" "+label,140,yt+42);
-        g.fillStyle="#555"; g.font='6.5px sans-serif'; g.fillText("\u7523\u524D",85,yt+52); g.fillText("\u7523\u5F8C56\u65E5",220,yt+52); g.fillText("\u7523\u5F8C57\u65E5",360,yt+52);
+        // ======= 通常フローチャート（改良版） =======
+
+        // 産前休暇（ピンク系）
+        rr(30,yt-2,5,30,2,"#ec4899");
+        rr(40,yt,155,26,4,"#fce7f3");
+        g.strokeStyle="#f9a8d4"; g.lineWidth=0.8; rr(40,yt,155,26,4); g.stroke();
+        g.fillStyle="#db2777"; g.font='bold 8px sans-serif';
+        g.fillText("\u7523\u524D\u4F11\u6687",50,yt+11);
+        g.fillStyle="#1a1a1a"; g.font='7px sans-serif';
+        g.fillText(fd(ps)+" ~",50,yt+22);
+        rr(145,yt+4,45,11,6,"#ec4899");
+        g.fillStyle="#fff"; g.font='bold 6.5px sans-serif'; g.fillText("6\u9031\u9593",152,yt+13);
+
+        // 矢印1
+        g.strokeStyle="#64748b"; g.lineWidth=1.2;
+        g.beginPath(); g.moveTo(198,yt+13); g.lineTo(213,yt+13); g.stroke();
+        g.beginPath(); g.moveTo(208,yt+8); g.lineTo(213,yt+13); g.lineTo(208,yt+18); g.stroke();
+
+        // 産後休暇（ピンク系）
+        rr(218,yt-2,5,30,2,"#ec4899");
+        rr(228,yt,145,26,4,"#fce7f3");
+        g.strokeStyle="#f9a8d4"; g.lineWidth=0.8; rr(228,yt,145,26,4); g.stroke();
+        g.fillStyle="#db2777"; g.font='bold 8px sans-serif';
+        g.fillText("\u7523\u5F8C\u4F11\u6687",238,yt+11);
+        g.fillStyle="#1a1a1a"; g.font='7px sans-serif';
+        g.fillText("~ "+fd(pe),238,yt+22);
+        rr(323,yt+4,45,11,6,"#ec4899");
+        g.fillStyle="#fff"; g.font='bold 6.5px sans-serif'; g.fillText("8\u9031\u9593",330,yt+13);
+
+        // 矢印2
+        g.strokeStyle="#64748b"; g.lineWidth=1.2;
+        g.beginPath(); g.moveTo(376,yt+13); g.lineTo(391,yt+13); g.stroke();
+        g.beginPath(); g.moveTo(386,yt+8); g.lineTo(391,yt+13); g.lineTo(386,yt+18); g.stroke();
+
+        // 育児休業（緑系）
+        rr(396,yt-2,5,30,2,"#16a34a");
+        rr(406,yt,205,26,4,"#dcfce7");
+        g.strokeStyle="#86efac"; g.lineWidth=0.8; rr(406,yt,205,26,4); g.stroke();
+        g.fillStyle="#16a34a"; g.font='bold 8px sans-serif';
+        g.fillText("\u80B2\u5150\u4F11\u696D",416,yt+11);
+        g.fillStyle="#1a1a1a"; g.font='7px sans-serif';
+        g.fillText(fd(cs)+" ~ "+c1.getFullYear()+"\u5E74"+String(c1.getMonth()+1)+"\u6708"+c1.getDate()+"\u65E5",416,yt+22);
+
+        // 出産日マーカー
+        var mc = useBirth ? "#dc2626" : "#d97706";
+        g.strokeStyle=mc; g.lineWidth=2;
+        g.beginPath(); g.moveTo(225,yt-10); g.lineTo(225,yt+31); g.stroke();
+        g.fillStyle="#1a1a1a"; g.font='bold 7.5px sans-serif';
+        g.fillText("\u25BC "+fd(baseDate)+" "+label,170,yt+42);
+        g.fillStyle="#555"; g.font='6.5px sans-serif';
+        g.fillText("\u7523\u524D",90,yt+52); g.fillText("\u7523\u5F8C56\u65E5",270,yt+52); g.fillText("\u7523\u5F8C57\u65E5",416,yt+52);
       }
-      var yb=yt+70; rr(355,yb,200,15,2,"#fef9c3"); g.fillStyle="#1a1a1a"; g.font='8px sans-serif';
-      g.fillText(isPapa ? "\u51FA\u751F\u6642\u80B2\u4F11\u7D66\u4ED8\u91D1 \uFF0B \u80B2\u4F11\u7D66\u4ED8\u91D1" : "\u80B2\u5150\u4F11\u696D\u7D66\u4ED8\u91D1", isPapa ? 370 : 400, yb+11);
-      g.fillStyle="#555"; g.font='6.5px sans-serif'; g.fillText("10\u65E5\u4EE5\u5185 \u2193",355,yb+28);
-      var yp=yb+40;
-      g.fillStyle="#1a1a1a"; g.font='7.5px sans-serif'; g.fillText("\u30FB\u96C7\u7528\u4FDD\u967A\u80B2\u5150\u4F11\u696D\u7D66\u4ED8\u306E\u53D7\u7D66\u8CC7\u683C\u78BA\u8A8D\u624B\u7D9A\u304D\uFF08\u6BCD\u5B50\u624B\u5E33\u30FB\u901A\u5E33\u5199\u3057\u5FC5\u8981\uFF09",135,yp);
-      g.fillStyle="#1a56db"; g.fillText("\u4EE5\u5F8C\u30012\u30F6\u6708\u6BCE\u306B\u652F\u7D66\u7533\u8ACB\u624B\u7D9A\u304D",470,yp);
-      g.fillStyle="#555"; g.font='6px sans-serif'; g.fillText("\u203B\u53D7\u7D66\u8CC7\u683C\u78BA\u8A8D\u624B\u7D9A\u304D\u3068\u521D\u56DE\u306E\u652F\u7D66\u7533\u8ACB\u3092\u540C\u6642\u306B\u884C\u3046\u5834\u5408",145,yp+12);
-      g.fillText("\u80B2\u5150\u4F11\u696D\u958B\u59CB\u65E5\u304B\u30894\u30F6\u6708\u3092\u7D4C\u904E\u3059\u308B\u65E5\u306E\u5C5E\u3059\u308B\u6708\u672B\u65E5\u307E\u3067\uFF01",155,yp+23);
-      var ye=yp+44; rr(28,ye,95,18,3,"#16a34a"); g.fillStyle="#fff"; g.font='bold 9px sans-serif'; g.fillText("\u96C7 \u7528 \u4FDD \u967A",36,ye+13);
-      if (isPapa) {
-        rr(128,ye,180,18,3,"#dcfce7"); g.fillStyle="#1a1a1a"; g.font='7px sans-serif';
-        g.fillText("\u51FA\u751F\u6642\u80B2\u4F11\u7D66\u4ED8\u91D1\uFF0B\u80B2\u4F11\u7D66\u4ED8\u91D1",133,ye+13);
-        g.fillText("\u51FA\u751F\u6642\u80B2\u4F11\u7D66\u4ED8\u91D1\uFF1A\u8CCC\u91D1\u65E5\u984D\u00D767\uFF05",315,ye+5);
-        g.fillText("\u80B2\u4F11\u7D66\u4ED8\u91D1\uFF1A180\u65E5\u76EE\u307E\u3067 67\uFF05 \u30FB 181\u65E5\u76EE\u304B\u3089 50\uFF05",315,ye+18);
-      } else {
-        rr(128,ye,135,18,3,"#dcfce7"); g.fillStyle="#1a1a1a"; g.font='8px sans-serif'; g.fillText("\u80B2 \u5150 \u4F11 \u696D \u7D66 \u4ED8 \u91D1",133,ye+13);
-        g.fillText("\u8CCC\u91D1\u6708\u984D \u00D7 \u226A\u958B\u59CB\u304B\u3089180\u65E5\u76EE\u307E\u3067 67\uFF05\u30FB181\u65E5\u76EE\u304B\u3089 50\uFF05\u226B",270,ye+13);
-      }
-      g.fillStyle="#555"; g.font='6.5px sans-serif'; g.fillText("\uFF08\u4F11\u696D\u958B\u59CB\u6642\u8CCC\u91D1\u65E5\u984D\u00D7\u652F\u7D66\u65E5\u6570\uFF09",270,ye+26);
+      if (!isPapa) {
+      // ======= 給付金ボックス（色で関連付け） =======
+      var yf2 = yt + 58;
+
+      // 点線コネクタ
+      g.setLineDash([2,2]);
+      g.strokeStyle="#f9a8d4"; g.lineWidth=0.8;
+      g.beginPath(); g.moveTo(130,yt+26); g.lineTo(130,yf2); g.stroke();
+      g.strokeStyle="#86efac";
+      g.beginPath(); g.moveTo(480,yt+26); g.lineTo(480,yf2); g.stroke();
+      g.setLineDash([]);
+
+      // 出産手当金（ピンク系 = 産前産後休暇と同色系）
+      rr(40,yf2,215,18,3,"#fce7f3");
+      g.strokeStyle="#f9a8d4"; g.lineWidth=0.8; rr(40,yf2,215,18,3); g.stroke();
+      g.fillStyle="#db2777"; g.font='bold 7.5px sans-serif';
+      g.fillText("\u51FA\u7523\u624B\u5F53\u91D1",80,yf2+13);
+      // 振込目安
+      rr(42,yf2+20,210,12,2,"#fdf2f8");
+      g.fillStyle="#db2777"; g.font='bold 6.5px sans-serif';
+      var submitTo = person.company.includes("\u30C6\u30AF\u30CE\u30C7\u30B8\u30BF\u30EB") ? "TJK" : "\u5354\u4F1A\u3051\u3093\u307D";
+      g.fillText("\u00A5 \u632F\u8FBC\u76EE\u5B89 : \u7523\u5F8C\u4F11\u6687\u7D42\u4E86\u5F8C "+submitTo+"\u3078\u7533\u8ACB -> \u7D041~2\u30F6\u6708\u5F8C",48,yf2+29);
+
+      // 育児休業給付金（緑系 = 育児休業と同色系）
+      rr(293,yf2,215,18,3,"#dcfce7");
+      g.strokeStyle="#86efac"; g.lineWidth=0.8; rr(293,yf2,215,18,3); g.stroke();
+      g.fillStyle="#16a34a"; g.font='bold 7.5px sans-serif';
+      g.fillText("\u80B2\u5150\u4F11\u696D\u7D66\u4ED8\u91D1",328,yf2+13);
+      // 振込目安
+      rr(295,yf2+20,210,12,2,"#f0fdf4");
+      g.fillStyle="#16a34a"; g.font='bold 6.5px sans-serif';
+      g.fillText("\u00A5 \u521D\u56DE\u632F\u8FBC : \u80B2\u4F11\u958B\u59CB\u304B\u3089\u7D04 4~5\u30F6\u6708\u5F8C",301,yf2+29);
+
+      // ======= 手続きフロー =======
+      var yh2 = yf2 + 38;
+      rr(35,yh2,580,46,4,"#f8fafc");
+      g.strokeStyle="#e2e8f0"; g.lineWidth=0.5; rr(35,yh2,580,46,4); g.stroke();
+
+      // 受給資格確認手続き（強調）
+      g.fillStyle="#1a1a1a"; g.font='bold 10px sans-serif';
+      g.fillText("\u53D7\u7D66\u8CC7\u683C\u78BA\u8A8D\u624B\u7D9A\u304D",220,yh2+12);
+      g.fillStyle="#dc2626"; g.font='bold 9px sans-serif';
+      g.fillText("(\u6BCD\u5B50\u624B\u5E33\u30FB\u901A\u5E33\u5199\u3057 \u5FC5\u8981)",390,yh2+12);
+
+      g.fillStyle="#1a56db"; g.font='bold 9px sans-serif';
+      g.fillText("\u4EE5\u5F8C\u30012\u30F6\u6708\u6BCE\u306B\u652F\u7D66\u7533\u8ACB\u624B\u7D9A\u304D",220,yh2+28);
+      g.fillStyle="#94a3b8"; g.font='6px sans-serif';
+      g.fillText("* \u53D7\u7D66\u8CC7\u683C\u78BA\u8A8D\u3068\u521D\u56DE\u652F\u7D66\u7533\u8ACB\u3092\u540C\u6642\u306B\u884C\u3046\u5834\u5408\u3001\u80B2\u4F11\u958B\u59CB\u65E5\u304B\u30894\u30F6\u6708\u3092\u7D4C\u904E\u3059\u308B\u65E5\u306E\u5C5E\u3059\u308B\u6708\u672B\u65E5\u307E\u3067",220,yh2+40);
+
+      // ======= 2段構成：左=雇用保険 / 右=給付率まとめ =======
+      var yb2 = yh2 + 56;
+
+      // 雇用保険セクション
+      rr(28,yb2,95,18,3,"#16a34a"); g.fillStyle="#fff"; g.font='bold 9px sans-serif'; g.fillText("\u96C7 \u7528 \u4FDD \u967A",36,yb2+13);
+      rr(128,yb2,150,18,3,"#dcfce7"); g.fillStyle="#1a1a1a"; g.font='7.5px sans-serif'; g.fillText("\u80B2\u5150\u4F11\u696D\u7D66\u4ED8\u91D1",138,yb2+13);
+
+      // 給付率
+      g.fillStyle="#1a1a1a"; g.font='7px sans-serif';
+      g.fillText("\u80B2\u5150\u4F11\u696D\u7D66\u4ED8\u91D1:",290,yb2+5);
+      g.fillStyle="#16a34a"; g.font='bold 8px sans-serif';
+      g.fillText("180\u65E5\u307E\u3067 67% \u30FB 181\u65E5\u76EE\u304B\u3089 50%",405,yb2+5);
       g.fillStyle="#555"; g.font='6.5px sans-serif';
-      g.fillText("\u203B\u793E\u4F1A\u4FDD\u967A\u6599\u514D\u9664\u671F\u9593\u306F\u3001\u80B2\u5150\u4F11\u696D\u3092\u7D42\u4E86\u3059\u308B\u65E5\u306E\u7FCC\u65E5\u304C\u5C5E\u3059\u308B\u6708\u306E\u524D\u6708\u307E\u3067\u3067\u3001\u6700\u59273\u5E74\u9593\u3067\u3059\u3002",25,H-42);
-      g.fillText("\u203B\u96C7\u7528\u4FDD\u967A\u306E\u80B2\u5150\u4F11\u696D\u7D66\u4ED8\u91D1\u306B\u3064\u3044\u3066\u3001\u5B50\u304C1\u6B73\u306B\u9054\u3059\u308B\u65E5\u4EE5\u964D\u3082\u80B2\u5150\u4F11\u696D\u3092\u53D6\u5F97\u3059\u308B\u5834\u5408\u306F\u30012\u6B73\u306B\u9054\u3059\u308B\u524D\u65E5\u307E\u3067\u671F\u9593\u5EF6\u9577\u304C\u51FA\u6765\u307E\u3059\u3002",25,H-30);
-      g.fillText("\u3057\u304B\u3057\u3001\u8A8D\u53EF\u4FDD\u80B2\u6240\u306B\u5165\u308C\u306A\u3044\u30FB\u990A\u80B2\u56F0\u96E3\u306A\u72B6\u614B\u306B\u306A\u3063\u305F\u5834\u5408\u306B\u306E\u307F\u652F\u7D66\u3055\u308C\u307E\u3059\u3002\u203B\u6DFB\u4ED8\u66F8\u985E\u304C\u5FC5\u8981\u3067\u3059\u203B",35,H-19);
+      g.fillText("(\u4F11\u696D\u958B\u59CB\u6642\u8CC3\u91D1\u65E5\u984D x \u652F\u7D66\u65E5\u6570)",290,yb2+18);
+
+      // 出産手当金率
+      g.fillStyle="#1a1a1a"; g.font='7px sans-serif';
+      g.fillText("\u51FA\u7523\u624B\u5F53\u91D1:",290,yb2+32);
+      g.fillStyle="#db2777"; g.font='bold 8px sans-serif';
+      g.fillText("\u6A19\u6E96\u5831\u916C\u65E5\u984D\u306E 2/3 \u76F8\u5F53\u984D",405,yb2+32);
+
+      // ======= 出生後休業支援給付金（左下） =======
+      var ybf = yb2 + 48;
+      rr(28,ybf,400,108,5,"#fff7ed");
+      g.strokeStyle="#fdba74"; g.lineWidth=1; rr(28,ybf,400,108,5); g.stroke();
+      rr(35,ybf+5,230,16,3,"#f97316");
+      g.fillStyle="#fff"; g.font='bold 8.5px sans-serif';
+      g.fillText("\u51FA\u751F\u5F8C\u4F11\u696D\u652F\u63F4\u7D66\u4ED8\u91D1 (R7.4~)",42,ybf+16);
+
+      g.fillStyle="#1a1a1a"; g.font='bold 8.5px sans-serif';
+      g.fillText("\u652F\u7D66\u984D : \u8CC3\u91D1\u65E5\u984D x 13%",42,ybf+35);
+      g.fillStyle="#dc2626"; g.font='bold 9px sans-serif';
+      g.fillText("-> 67% + 13% = \u5B9F\u8CEA 80%",230,ybf+35);
+      rr(365,ybf+25,55,14,6,"#dc2626");
+      g.fillStyle="#fff"; g.font='bold 7px sans-serif'; g.fillText("\u6700\u592728\u65E5",372,ybf+36);
+
+      g.fillStyle="#1a1a1a"; g.font='bold 7.5px sans-serif';
+      g.fillText("[\u652F\u7D66\u8981\u4EF6]",42,ybf+53);
+      g.fillStyle="#333"; g.font='7px sans-serif';
+      g.fillText("(1) \u672C\u4EBA\u304C\u80B2\u5150\u4F11\u696D\u3092\u53D6\u5F97 (\u7523\u5F8C\u4F11\u6687\u5F8C\u306E\u80B2\u4F11\u304C\u5BFE\u8C61)",50,ybf+66);
+      g.fillText("(2) \u914D\u5076\u8005(\u592B)\u304C\u51FA\u7523\u65E5\u4EE5\u964D\u306B14\u65E5\u4EE5\u4E0A\u306E\u80B2\u4F11\u7B49\u3092\u53D6\u5F97",50,ybf+79);
+      g.fillStyle="#64748b"; g.font='6.5px sans-serif';
+      g.fillText("   (\u80B2\u5150\u4F11\u696D / \u51FA\u751F\u6642\u80B2\u5150\u4F11\u696D \u306E\u3044\u305A\u308C\u304B)",50,ybf+91);
+      g.fillStyle="#dc2626"; g.font='bold 6.5px sans-serif';
+      g.fillText("[\u5FC5\u8981\u66F8\u985E] \u914D\u5076\u8005\u306E\u88AB\u4FDD\u967A\u8005\u756A\u53F7 / \u51FA\u7523\u4E88\u5B9A\u65E5\u306E\u5206\u304B\u308B\u6BCD\u5B50\u624B\u5E33\u306E\u30DA\u30FC\u30B8",42,ybf+104);
+
+      // ======= フッター =======
+      g.fillStyle="#94a3b8"; g.font='6px sans-serif';
+      g.fillText("* \u793E\u4F1A\u4FDD\u967A\u6599\u514D\u9664\u671F\u9593\u306F\u3001\u80B2\u5150\u4F11\u696D\u3092\u7D42\u4E86\u3059\u308B\u65E5\u306E\u7FCC\u65E5\u304C\u5C5E\u3059\u308B\u6708\u306E\u524D\u6708\u307E\u3067 (\u6700\u59273\u5E74\u9593)",25,H-24);
+      g.fillText("* \u80B2\u5150\u4F11\u696D\u7D66\u4ED8\u91D1\u306F\u6761\u4EF6\u306B\u3088\u308A2\u6B73\u307E\u3067\u5EF6\u9577\u53EF\u80FD (\u4FDD\u80B2\u6240\u4E0D\u627F\u8AFE\u7B49\u30FB\u6DFB\u4ED8\u66F8\u985E\u5FC5\u8981)    * \u51FA\u7523\u624B\u5F53\u91D1\u306F\u7523\u5F8C\u4F11\u6687\u7D42\u4E86\u5F8C\u306B\u5065\u4FDD\u3078\u7533\u8ACB",25,H-13);
       g.fillStyle="#1a56db"; g.fillRect(0,H-8,W,2);
       setFlowchartPreview({ name: person.name + (useBirth ? " (\u5B9F\u51FA\u7523)" : " (\u4E88\u5B9A\u65E5)"), dataUrl: cv.toDataURL("image/png"), canvasW: W, canvasH: H });
+      } // end !isPapa
     } catch(e) { console.error("PDF gen error:",e); alert("\u751F\u6210\u30A8\u30E9\u30FC: "+e.message); }
   };
   const filteredData = useMemo(() => {
