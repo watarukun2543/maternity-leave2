@@ -7,7 +7,7 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👶</text></svg>">
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-  <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script crossorigin src="https://unpkg.com/@babel/standalone@7.23.10/babel.min.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
   <style>body{margin:0;padding:0;font-family:"Noto Sans JP",-apple-system,BlinkMacSystemFont,sans-serif}#root{min-height:100vh}</style>
@@ -20,7 +20,7 @@
       firebase.initializeApp(firebaseConfig);window.db=firebase.firestore();window._fbReady=true;
     } catch(e) { console.warn("Firebase init failed:",e); window._fbReady=false; }
   </script>
-  <script type="text/babel">
+  <script type="text/babel" data-presets="react">
 window.storage={
   async get(key){if(window._fbReady){try{const doc=await window.db.collection("appdata").doc(key).get();if(doc.exists)return{key,value:doc.data().value}}catch(e){}}const val=localStorage.getItem("ml_"+key);if(val===null)throw new Error("Key not found");return{key,value:val}},
   async set(key,value){if(window._fbReady){try{await window.db.collection("appdata").doc(key).set({value,updatedAt:firebase.firestore.FieldValue.serverTimestamp()});localStorage.setItem("ml_"+key,value);return{key,value}}catch(e){}}localStorage.setItem("ml_"+key,value);return{key,value}},
