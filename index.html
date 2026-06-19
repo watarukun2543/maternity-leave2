@@ -22,7 +22,7 @@
       window._fbReady=true;
     } catch(e) { console.warn("Firebase init failed:",e); window._fbReady=false; }
   </script>
-  <script type="text/babel" data-type="module">
+  <script type="text/babel">
 window.storage={
   async get(key){if(window._fbReady){try{var doc=await window.db.collection("appdata").doc(key).get();if(doc.exists)return{key,value:doc.data().value}}catch(e){}}var val=localStorage.getItem("ml_"+key);if(val===null)throw new Error("Key not found");return{key,value:val}},
   async set(key,value){if(window._fbReady){try{await window.db.collection("appdata").doc(key).set({value:value,updatedAt:firebase.firestore.FieldValue.serverTimestamp()});localStorage.setItem("ml_"+key,value);return{key,value}}catch(e){}}localStorage.setItem("ml_"+key,value);return{key,value}},
